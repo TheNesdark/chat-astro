@@ -1,0 +1,344 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 6px;
+  align-self: flex-end;
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, #1a4d3a 0%, #22543d 100%);
+  border-radius: 16px;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+  border: 1px solid #10b981;
+  position: relative;
+  backdrop-filter: blur(10px);
+  min-width: 100px;
+  padding: 0px 6px;
+}
+
+
+.message:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 92, 75, 0.4);
+}
+
+
+.messageMenu {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 5;
+}
+
+
+.messageContent {
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+}
+
+
+.messageMenuButton {
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  list-style: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.message:hover .messageMenuButton {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.messageMenu::-webkit-details-marker {
+  display: none;
+}
+
+.messageMenu::marker {
+  display: none;
+}
+
+.messageMenuButton:hover {
+  background: rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  transform: scale(1.1);
+}
+
+.menuDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #1f2937;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  z-index: 15;
+  min-width: 120px;
+  margin-top: 8px;
+  border: 1px solid #374151;
+  backdrop-filter: blur(10px);
+}
+
+.menuOptionDelete {
+  padding: 12px 16px;
+  cursor: pointer;
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menuOptionDelete:hover {
+  background-color: #374151;
+  color: #f87171;
+}
+
+.menuOptionDelete::before {
+  content: "🗑️";
+  font-size: 14px;
+}
+
+.messageText {
+  color: #ecfdf5;
+  font-size: 15px;
+  padding: 6px 12px;
+  word-wrap: break-word;
+  text-align: right;
+  font-weight: 500;
+  overflow-y: auto;
+  
+}
+
+.messageMedia {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.messageMedia:has(audio) {
+  padding: 8px;
+}
+
+/* Imágenes */
+.messageMedia img {
+  width: 100%;
+  max-height: 300px;
+  border-radius: 12px;
+  cursor: pointer;
+  object-fit: cover;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: block;
+}
+
+.messageMedia img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Videos */
+.messageMedia video {
+  width: 100%;
+  max-height: 300px;
+  border-radius: 12px;
+  outline: none;
+  background: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.messageMedia video::-webkit-media-controls-panel {
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  border-radius: 0 0 12px 12px;
+}
+
+/* Audios */
+.messageMedia audio {
+  min-width: 250px;
+  width: 100%;
+  outline: none;
+  background: transparent;
+}
+
+.messageMedia audio::-webkit-media-controls-play-button,
+.messageMedia audio::-webkit-media-controls-mute-button,
+.messageMedia audio::-webkit-media-controls-current-time-display,
+.messageMedia audio::-webkit-media-controls-time-remaining-display,
+.messageMedia audio::-webkit-media-controls-timeline {
+  filter: invert(1);
+}
+
+.messageMedia audio::-webkit-media-controls-panel,
+.messageMedia audio::-webkit-media-controls-enclosure {
+  filter: none;
+  background: linear-gradient(135deg, #1a4d3a 0%, #22543d 100%);
+}
+
+/* Documentos */
+.messageMedia a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 13px;
+  transition: all 0.2s ease;
+  margin: 8px;
+}
+
+.messageMedia a:hover {
+  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.messageMedia a::before {
+  content: "📄";
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.messageMedia a span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.messageMedia a[href*=".pdf"]::before { content: "📕"; }
+.messageMedia a[href*=".doc"]::before,
+.messageMedia a[href*=".docx"]::before { content: "📘"; }
+.messageMedia a[href*=".xls"]::before,
+.messageMedia a[href*=".xlsx"]::before { content: "📗"; }
+.messageMedia a[href*=".ppt"]::before,
+.messageMedia a[href*=".pptx"]::before { content: "📙"; }
+.messageMedia a[href*=".txt"]::before { content: "📝"; }
+.messageMedia a[href*=".zip"]::before,
+.messageMedia a[href*=".rar"]::before { content: "🗜️"; }
+
+.messageTime {
+  font-size: 11px;
+  color: #34d399;
+  text-align: right;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Estilos para código */
+.messageText pre {
+  background-color: #2d2d2d;
+  color: #f1f1f1;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 1em;
+  overflow-x: auto;
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre-wrap;
+}
+
+.messageText code {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Modal de imagen */
+.imageModal {
+  border: none;
+  background: rgba(0, 0, 0, 0.95);
+  padding: 0;
+  margin: auto;
+  max-width: 95vw;
+  max-height: 95vh;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.imageModal::backdrop {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.modalImage {
+  max-width: 100%;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .message {
+    max-width: 90%;
+    margin-bottom: 4px;
+  }
+
+  .messageYou {
+    padding: 6px 10px;
+  }
+
+  .messageText {
+    font-size: 14px;
+  }
+
+  .messageMedia img,
+  .messageMedia video {
+    max-height: 200px;
+    border-radius: 8px;
+  }
+
+  .messageMedia a {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin: 6px;
+  }
+
+  .imageModal {
+    max-width: 98vw;
+    max-height: 98vh;
+    border-radius: 8px;
+  }
+
+  .modalImage {
+    max-height: 85vh;
+    border-radius: 8px;
+  }
+}

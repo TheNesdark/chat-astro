@@ -1,0 +1,22 @@
+---
+import AttachButton from "./AttachButton.astro";
+---
+
+<link rel="stylesheet" href="/src/styles/ChatSend.css" />
+<footer class="chatSend">
+  <AttachButton />
+  <form id="messageForm" class="form">
+    <input
+      name="message"
+      type="text"
+      placeholder="Escribe un mensaje..."
+      required
+      class="input"
+    />
+    <button type="submit" class="send">
+      <img src="/src/assets/icons/send.svg" alt="send" class="icon" />
+    </button>
+  </form>
+</footer>
+
+<script type="module" src="/src/handlers/messageHandler.ts"></script>

@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="/src/styles/AttachButton.css" />
+<div class="attachButton">
+  <details>
+    <summary>
+      <img
+        src="/src/assets/icons/plus-solid-full.svg"
+        alt="plus"
+        class="icon"
+      />
+    </summary>
+    <div class="attachMenu">
+      <input type="file" id="fileInput" name="file" hidden />
+      <label for="fileInput">
+        <img src="/src/assets/icons/inputfile.svg" alt="file" class="icon" />
+      </label>
+      <label id="micInput">
+        <img
+          src="/src/assets/icons/microphone-solid-full.svg"
+          alt="microphone"
+          class="icon"
+        />
+      </label>
+    </div>
+  </details>
+</div>
+
+<script type="module" src="/src/handlers/InputFileHandler.ts"></script>
+<script type="module" src="/src/handlers/InputMicHandler.ts"></script>
+<script>
+  const attachButton = document.querySelector('.attachButton');
+  const details = attachButton.querySelector('details');
+  document.addEventListener('click', (e) => {
+    details.open = false;
+  });
+</script>
+<style>
+
+</style>

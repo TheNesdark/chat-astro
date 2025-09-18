@@ -5,8 +5,7 @@ export interface Message {
     file?: File;
     timestamp: number;
 }
-
-export interface File {
+export interface fileData {
     buffer: ArrayBuffer;
     type: string;
     name: string;

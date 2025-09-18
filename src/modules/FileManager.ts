@@ -1,10 +1,5 @@
 import  chatUI from "@/ui/chatUI";
-
-export interface fileData {
-    buffer: ArrayBuffer;
-    type: string;
-    name: string;
-}
+import type { fileData } from "@/types";
 
 class FileManager {
     private static file: File | null = null;

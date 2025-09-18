@@ -1,23 +1,11 @@
 import styles from '@styles/UserMessage.module.css';
 import FileRender from '@utils/FileRender';
-import messageService from '@services/MessageService';
+import MessageMenu from './MessageMenu'; 
 
 export default function UserMessage({ message }) {
-
   return (
     <div className={`${styles.message}`}>
-      <header>
-        <span>{message.username}</span>
-        <details className={styles.messageMenu}>
-        <summary className={styles.messageMenuButton}>⋮</summary>
-        <div className={styles.menuDropdown}>
-          <button className={styles.menuOptionDelete} onClick={() => messageService.deleteMessage(message.id)}>
-            Eliminar
-          </button>
-        </div>
-      </details>
-      </header>
-
+      <MessageMenu messageId={message.id} />
       <div className={styles.messageContent}>
         <div className={styles.messageText}>{message.message}</div>
         <div className={styles.messageMedia}>

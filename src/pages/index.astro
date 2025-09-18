@@ -2,6 +2,8 @@
 import Header from "@components/ChatHeader.astro";
 import ChatContainer from "@components/ChatContainer";
 import ChatSend from "../components/ChatSend.astro";
+import "../styles/global.css";
+import CamViewer from "@/components/CamViewer.astro";
 ---
 
 <!doctype html>
@@ -19,6 +21,7 @@ import ChatSend from "../components/ChatSend.astro";
     <Header />
     <ChatContainer client:load />
     <ChatSend />
+    <CamViewer />
   </body>
 </html>
 

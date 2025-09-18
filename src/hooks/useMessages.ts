@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
-import { getSocket } from "@modules/socket.ts";
+import type { Message } from "@/types";
+import SocketManager from "@/modules/SocketManager";
 
-export interface Message {
-    id: string;
-    username: string;
-    message: string;
-}
 
 function useMessages() {
-    const [messages, setMessages] = useState<any[]>([]);
+    const [messages, setMessages] = useState<Message[]>([]);
 
     const loadMessages = (messages: Message[]) => {
         setMessages(messages);
@@ -28,7 +24,7 @@ function useMessages() {
 
 
     useEffect(() => {
-        const socket = getSocket();
+        const socket = SocketManager.getSocket();
         if (!socket) {
             throw new Error("Socket no inicializado");
         }

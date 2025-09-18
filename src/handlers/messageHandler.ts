@@ -1,6 +1,6 @@
-import { getSocket } from "@modules/socket.ts";
-import FileManager from "@modules/FileManager.ts";
-import messageService from "@services/MessageService.ts";
+import FileManager from "@modules/FileManager";
+import messageService from "@services/MessageService";
+import commandHandler from "./commandhandler";
 
 const form = document.getElementById("messageForm");
 

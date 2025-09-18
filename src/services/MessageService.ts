@@ -1,12 +1,16 @@
 import type { Message } from "@/types";
-import { getSocket } from "@modules/socket.ts";
-const socket = getSocket();
+import SocketManager from "@/modules/SocketManager";
+
 const messageService = {
-    sendMessage: (message: Message) => {
-        socket.emit("newMessage", message);
+    sendMessage: (message: Message) => { SocketManager.send("newMessage", message);
     },
-    deleteMessage: (id: string) => {
-        socket.emit("deleteMessage", id);
+    deleteMessage: (messageId: string) => { SocketManager.send("deleteMessage", messageId);
+    },
+    clearChat: () => { SocketManager.send("clearChat", null);
+    },
+    generateImage: (prompt: string) => { SocketManager.send("generateImage", prompt);
+    },
+    ask: (prompt: string) => { SocketManager.send("askAI", prompt);
     },
 };
 

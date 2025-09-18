@@ -1,7 +1,6 @@
-import { initSocket, connectSocket } from "./modules/socket.ts";
-import socketEvents from "./events/socketEvents.ts";
-const socket = initSocket("Andres");
+import SocketManager from "./modules/SocketManager";
 
-window.addEventListener("ReactReady", () => {
-  connectSocket();
-});
+const username = "Andres";
+SocketManager.init(username);
+
+window.addEventListener("ReactReady", SocketManager.connect.bind(SocketManager));

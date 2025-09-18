@@ -1,5 +1,5 @@
 import type { Socket } from "socket.io-client";
-import  chatUI  from "../ui/chatUI.ts";
+import  chatUI  from "../ui/chatUI";
 
 const socketEvents = (socket: Socket) => {
     socket.on("connect", () => {

@@ -1,0 +1,42 @@
+.container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  background: #1e1e1e;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #525252 #1e1e1e;
+  scroll-behavior: smooth;
+}
+
+#chat::-webkit-scrollbar {
+  width: 8px;
+}
+
+#chat::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#chat::-webkit-scrollbar-thumb {
+  background: #525252;
+  border-radius: 4px;
+}
+
+#chat::-webkit-scrollbar-thumb:hover {
+  background: #666666;
+}
+
+
+.noMessages {
+  color: #666;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 16px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

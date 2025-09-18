@@ -1,0 +1,26 @@
+---
+---
+<link rel="stylesheet" href="/src/styles/camViewer.css" />
+<dialog id="camModal">
+  <video id="camVideo" hidden></video>
+  <canvas id="camCanvas" hidden></canvas>
+  <button id="btnCapture">
+    <img src="/src/assets/icons/camera-light-full.svg" alt="camera" class="icon" />
+  </button>
+  <button id="btnClose">
+    <img src="/src/assets/icons/xmark-thin-full.svg" alt="close" class="icon" />
+  </button>
+  <div id="camControls">
+    <button id="btnBack" >
+      <img src="/src/assets/icons/arrow-left-thin-full.svg" alt="back" class="icon" />
+    </button>
+    <button id="btnSend">
+      <img src="/src/assets/icons/file-arrow-down-thin-full.svg" alt="send" class="icon" />
+    </button>
+  </div>
+</dialog>
+
+
+<script type="module" src="/src/handlers/CamHandler.ts"></script>
+
+r

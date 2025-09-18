@@ -10,7 +10,7 @@ class SocketManager {
             return this.socket!;
         }
 
-        this.socket = io("http://localhost:8080/", {
+        this.socket = io("chat-socket.railway.internal", {
             auth: { user },
             autoConnect: false,
         });

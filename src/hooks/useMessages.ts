@@ -32,6 +32,7 @@ function useMessages() {
         socket.on("loadMessages", loadMessages);
         socket.on("clearChat", clearMessages);
         socket.on("deleteMessage", deleteMessage);
+        socket.on("systemMessage", newMessage);
 
         window.dispatchEvent(new Event("ReactReady"));
 

@@ -10,13 +10,17 @@ form?.addEventListener("submit", async (e) => {
   const message = target.message.value.trim();
   if (!message && !FileManager.hasFile()) return;
 
-  const socket = getSocket();
-  
-  const messageData: any = {
+    const messageData: any = {
     username: "user",
     message: message,
     file: null,
   };
+
+  if (message.startsWith("/")) {
+    commandHandler(messageData);
+    target.message.value = "";
+    return;
+  }
 
   if (FileManager.hasFile()) {
      messageData.file = await FileManager.getFileAsBuffer();

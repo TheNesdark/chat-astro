@@ -8,11 +8,11 @@ const chatUI = {
         statusElement.className = status ? "online" : "offline";
     }, 
     updateFileStatus: (status: boolean) => {
-        const attachButton = document.querySelector(".attachButton")!;
+        const attachButton = document.getElementById("attachButton")!;
         attachButton.classList.toggle("HasFile", status);
     },
     updateButtonRecording: (status: boolean) => {
-        const attachButton = document.querySelector(".attachButton")!;
+        const attachButton = document.getElementById("attachButton")!;
         attachButton.classList.toggle("recording", status);
     },
 }

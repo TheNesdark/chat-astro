@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/src/styles/AttachButton.css" />
-<div class="attachButton">
+<div id="attachButton" >
+  <input type="file" id="fileInput" name="file" hidden />
   <details>
     <summary>
       <img
@@ -9,30 +10,47 @@
       />
     </summary>
     <div class="attachMenu">
-      <input type="file" id="fileInput" name="file" hidden />
-      <label for="fileInput">
-        <img src="/src/assets/icons/inputfile.svg" alt="file" class="icon" />
-      </label>
-      <label id="micInput">
-        <img
-          src="/src/assets/icons/microphone-solid-full.svg"
-          alt="microphone"
+      <label for="fileInput" aria-label="Seleccionar archivo">
+        <img 
+          src="/src/assets/icons/file-thin-full.svg" 
+          alt="file" 
           class="icon"
         />
       </label>
+      <button id="BtnMicrophone" type="button" aria-label="Grabar audio">
+        <img
+          src="/src/assets/icons/microphone-thin-full.svg"
+          alt="microphone"
+          class="icon"
+        />
+      </button>
+      <button id="BtnCamera" type="button" aria-label="Abrir cámara">
+        <img 
+          src="/src/assets/icons/camera-light-full.svg"
+          alt="camera" 
+          class="icon" />
+    </button>
     </div>
   </details>
 </div>
 
-<script type="module" src="/src/handlers/InputFileHandler.ts"></script>
-<script type="module" src="/src/handlers/InputMicHandler.ts"></script>
-<script>
-  const attachButton = document.querySelector('.attachButton');
+
+<script type="module">
+  import CamHandler from "/src/handlers/CamHandler";
+  import MicHandler from "/src/handlers/MicHandler";
+  import FileHandler from "/src/handlers/FileHandler";
+
+  const attachButton = document.getElementById('attachButton');
   const details = attachButton.querySelector('details');
+  const fileInput = attachButton.querySelector('input[type="file"]');
+  const btnMicrophone = attachButton.querySelector('#BtnMicrophone');
+  const btnCamera = attachButton.querySelector('#BtnCamera');
   document.addEventListener('click', (e) => {
     details.open = false;
   });
-</script>
-<style>
 
-</style>
+  btnMicrophone.addEventListener('click', MicHandler);
+  btnCamera.addEventListener('click', CamHandler);
+  fileInput.addEventListener('change', FileHandler);
+
+</script>

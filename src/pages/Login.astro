@@ -1,0 +1,178 @@
+---
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (accessToken && refreshToken) {
+  return redirect("/");
+}
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Login - Chat Astro</title>
+    <link rel="stylesheet" href="/src/styles/global.css" />  <!-- Asume global CSS para consistencia -->
+    <style>
+      body { 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        min-height: 100vh; 
+        margin: 0; 
+        background: #000;  /* Fondo negro como en Register */
+        color: #fff;
+      }
+      .login-container { 
+        background: rgba(255, 255, 255, 0.1);  /* Semi-transparente como en Register */
+        padding: 2.5rem; 
+        border-radius: 20px; 
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);  /* Sombra sutil */
+        text-align: center; 
+        width: 100%; 
+        max-width: 350px; 
+        color: #fff;
+      }
+      h1 { 
+        margin-bottom: 1rem; 
+        color: #fff; 
+        font-size: 1.5rem; 
+      }
+      p { 
+        margin-bottom: 1rem; 
+        color: #ccc; 
+      }
+      input { 
+        width: 100%; 
+        padding: 12px; 
+        margin: 8px 0; 
+        border: 1px solid rgba(255, 255, 255, 0.3);  /* Borde sutil */
+        border-radius: 8px;  /* Redondeado como en Register */
+        box-sizing: border-box;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.1);  /* Fondo semi-transparente */
+        color: #fff;
+        transition: border-color 0.2s;  /* Suave como en UI */
+      }
+      input:focus { 
+        outline: none; 
+        border-color: #fff;  /* Blanco para focus */
+      }
+      input::placeholder { 
+        color: #aaa; 
+      }
+      button { 
+        width: 100%; 
+        padding: 12px; 
+        background: rgba(255, 255, 255, 0.2);  /* Fondo como en Register */
+        color: #fff; 
+        border: none; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        font-size: 16px; 
+        font-weight: 500;
+        transition: transform 0.2s, box-shadow 0.2s;  /* Efecto hover como icons */
+        margin: 8px 0;
+      }
+      button:hover:not(:disabled) { 
+        transform: translateY(-1px); 
+        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3); 
+      }
+      button:disabled { 
+        background: rgba(255, 255, 255, 0.1); 
+        cursor: not-allowed; 
+      }
+      .link-register { 
+        color: rgba(255, 255, 255, 0.8); 
+        text-decoration: none; 
+        font-size: 14px; 
+      }
+      .link-register:hover { 
+        text-decoration: underline; 
+      }
+      .error { 
+        color: #ff6b6b; 
+        margin: 8px 0; 
+        font-size: 14px; 
+        background: rgba(255, 107, 107, 0.1); 
+        padding: 8px; 
+        border-radius: 4px; 
+      }
+      .message {
+        color: #51cf66; 
+        margin: 8px 0; 
+        background: rgba(81, 207, 102, 0.1); 
+        padding: 8px; 
+        border-radius: 4px; 
+      }
+      @media (max-width: 480px) { 
+        .login-container { 
+          margin: 1rem; 
+          padding: 1.5rem; 
+        } 
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h1>Login</h1>
+      <p>Ingresa a tu cuenta</p>
+      <form id="loginForm" action="/api/auth/signin" method="post">
+        <input type="email" name="email" required />
+        <input type="password" name="password" required minlength="6" />
+        <button type="submit">Ingresar</button>
+      </form>
+      <a href="/Register" class="link-register">¿No tienes cuenta? Regístrate</a>
+      <p id="message" class="message" style="display: none;"></p>
+    </div>
+  </body>
+  <script>
+
+    function showMessage(message, isError = true) {
+      const el = document.getElementById('message');
+      el.textContent = message;
+      el.style.display = 'block';
+      (isError ? el.classList.add('error') : el.classList.remove('error'));
+    }
+    const form = document.getElementById('loginForm') as HTMLFormElement;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = e.target as HTMLFormElement;
+      const email = data.email.value;
+      const password = data.password.value;
+
+      if (!email || !password) {
+        showMessage('Email y contraseña son requeridos.');
+        return;
+      }
+
+      if (password.length < 6) {
+        showMessage('La contraseña debe tener al menos 6 caracteres.');
+        return;
+      }
+
+      const formData = new FormData(data);
+      try {
+        const response = await fetch('/api/auth/signin', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          showMessage('Login exitoso. Redirigiendo...', false);
+          window.location.href = '/';   
+          return;
+
+        } else {
+          const errorText = await response.text();
+          showMessage(errorText || 'Error en el login.');
+        }
+      } catch (err) {
+        console.error('Error en fetch:', err);
+      }
+    });
+  </script>
+</html>

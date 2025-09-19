@@ -1,0 +1,200 @@
+---
+
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <title>Registro - Chat Astro</title>
+        <link rel="stylesheet" href="/src/styles/global.css" />
+        <!-- Asume global CSS para consistencia -->
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                    Roboto, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                margin: 0;
+                background: linear-gradient(
+                    135deg,
+                    #667eea 0%,
+                    #764ba2 100%
+                ); /* Gradiente moderno como en chat */
+                color: #333;
+            }
+            .register-form {
+                background: white;
+                padding: 2.5rem;
+                border-radius: 16px; /* Bordes redondeados como modals en chat */
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+                text-align: center;
+                width: 100%;
+                max-width: 350px; /* Responsivo */
+            }
+            h1 {
+                margin-bottom: 1rem;
+                color: #4a5568;
+                font-size: 1.5rem;
+            }
+            input {
+                width: 100%;
+                padding: 12px;
+                margin: 8px 0;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px; /* Redondeado como buttons en chat */
+                box-sizing: border-box;
+                font-size: 16px;
+                transition: border-color 0.2s; /* Suave como en UI */
+            }
+            input:focus {
+                outline: none;
+                border-color: #667eea; /* Color de chat */
+            }
+            button {
+                width: 100%;
+                padding: 12px;
+                background: linear-gradient(
+                    135deg,
+                    #667eea 0%,
+                    #764ba2 100%
+                ); /* Gradiente como body */
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: 500;
+                transition:
+                    transform 0.2s,
+                    box-shadow 0.2s; /* Efecto hover como icons */
+                margin: 8px 0;
+            }
+            button:hover:not(:disabled) {
+                transform: translateY(-1px);
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            }
+            button:disabled {
+                background: #a0aec0;
+                cursor: not-allowed;
+            }
+            .toggle-link {
+                color: #667eea;
+                text-decoration: none;
+                font-size: 14px;
+            }
+            .toggle-link:hover {
+                text-decoration: underline;
+            }
+            .error {
+                color: #e53e3e;
+                margin: 8px 0;
+                font-size: 14px;
+                background: #fed7d7;
+                padding: 8px;
+                border-radius: 4px;
+            }
+            .message {
+                color: #38a169;
+                margin: 8px 0;
+                background: #c6f6d5;
+                padding: 8px;
+                border-radius: 4px;
+            }
+            @media (max-width: 480px) {
+                .register-form {
+                    margin: 1rem;
+                    padding: 1.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="register-form">
+            <h1>Registro</h1>
+            <p>Únete al chat</p>
+            <form id="registerForm">
+                <input type="email" name="email" placeholder="Email" required />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password (mín. 6 chars)"
+                    required
+                    minlength="6"
+                />
+                <button type="submit" id="submitBtn">Registrarse</button>
+            </form>
+            <a href="/Login" class="toggle-link"
+                >¿Ya tienes cuenta? Inicia sesión</a
+            >
+            <p id="message" class="message" style="display: none;"></p>
+        </div>
+
+        <script>
+            const form = document.getElementById(
+                "registerForm",
+            ) as HTMLFormElement;
+            const submitBtn = document.getElementById(
+                "submitBtn",
+            ) as HTMLButtonElement;
+
+            function showMessage(message, isError = true) {
+                const el = document.getElementById("message");
+                el.textContent = message;
+                el.style.display = "block";
+                isError
+                    ? el.classList.add("error")
+                    : el.classList.remove("error");
+            }
+
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const data = e.target as HTMLFormElement;
+                const email = data.email.value.trim();
+                const password = data.password.value;
+
+                if (!email || !password) {
+                    showMessage("Email y contraseña son requeridos.");
+                    return;
+                }
+                if (password.length < 6) {
+                    showMessage(
+                        "La contraseña debe tener al menos 6 caracteres.",
+                    );
+                    return;
+                }
+                submitBtn.disabled = true;
+
+                const formData = new FormData(data);
+
+                try {
+                    const response = await fetch("/api/auth/register", {
+                        method: "POST",
+                        body: formData,
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        showMessage(
+                            data.message,
+                            false,
+                        );
+                        setTimeout(() => {
+                            window.location.href = "/Login";
+                        }, 1500);
+                    } else {
+                        showMessage(
+                            data.error || "Error en el registro.",
+                            true,
+                        );
+                    }
+                } catch (err) {
+                    console.error("Error en fetch:", err);
+                } finally {
+                    submitBtn.disabled = false;
+                }
+            });
+        </script>
+    </body>
+</html>

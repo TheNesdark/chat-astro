@@ -1,9 +1,44 @@
 ---
+import { supabase } from "@modules/SupabaseClient";
 import Header from "@components/ChatHeader.astro";
-import ChatContainer from "@components/ChatContainer";
-import ChatSend from "../components/ChatSend.astro";
+import ChatContainer from "@components/ChatContainer.jsx";
+import ChatSend from "@components/ChatSend.astro";
 import "../styles/global.css";
-import CamViewer from "@/components/CamViewer.astro";
+import CamViewer from "@components/CamViewer.astro";
+
+const accessToken = Astro.cookies.get("sb-access-token");
+const refreshToken = Astro.cookies.get("sb-refresh-token");
+
+if (!accessToken || !refreshToken) {
+  return Astro.redirect("/Login");
+}
+
+let session;
+try {
+  session = await supabase.auth.setSession({
+    refresh_token: refreshToken.value,
+    access_token: accessToken.value,
+  });
+  if (session.error) {
+    Astro.cookies.delete("sb-access-token", {
+      path: "/",
+    });
+    Astro.cookies.delete("sb-refresh-token", {
+      path: "/",
+    });
+    return Astro.redirect("/signin");
+  }
+} catch (error) {
+  Astro.cookies.delete("sb-access-token", {
+    path: "/",
+  });
+  Astro.cookies.delete("sb-refresh-token", {
+    path: "/",
+  });
+  return Astro.redirect("/signin");
+}
+
+
 ---
 
 <!doctype html>
@@ -14,6 +49,19 @@ import CamViewer from "@/components/CamViewer.astro";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
+    <script>
+      (function() {
+        // Chequeo inmediato (ejecuta antes de DOM)
+        const username = localStorage.getItem('username');
+        if (!username) {
+          console.log('No username, redirigiendo temprano a /Login');
+          window.location.replace('/Login');  // replace evita history back
+          return;
+        }
+
+        console.log('User loaded early:', username);
+      })();
+    </script>
     <script type="module" src="/src/main.js" defer></script>
 
   </head>

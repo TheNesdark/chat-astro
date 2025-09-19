@@ -1,6 +1,6 @@
 import SocketManager from "./modules/SocketManager";
 
-const username = "Andres";
+const username = "andres"
 SocketManager.init(username);
 
 window.addEventListener("ReactReady", () => {

@@ -10,6 +10,7 @@ const btnClose = document.getElementById('btnClose') as HTMLLabelElement;
 const btnBack = document.getElementById('btnBack') as HTMLLabelElement;
 const btnSend = document.getElementById('btnSend') as HTMLLabelElement;
 let stream: MediaStream | null = null; 
+let isCamRecording: boolean = false;
 
 if (btnClose) btnClose.addEventListener('click', closeCamera);
 if (btnCapture) btnCapture.addEventListener('click', capturePhoto);
@@ -19,12 +20,17 @@ if (modal) modal.addEventListener('close', closeCamera);
 
 
 async function camHandler() {
+  if (isCamRecording) {
+    return;
+  }
   try {
     stream = await navigator.mediaDevices.getUserMedia({ video: true });
     video.srcObject = stream;
     await video.play();
+    isCamRecording = true;
     modal.showModal();
     showCameraMode(); 
+
   } catch (error) {
     console.error('Error accediendo a la cámara:', error);
     alert('No se pudo acceder a la cámara. Verifica permisos.');
@@ -33,6 +39,9 @@ async function camHandler() {
 
 
 function closeCamera() {
+  if (!isCamRecording) {
+    return;
+  }
   if (stream) {
     stream.getTracks().forEach(track => track.stop());
     stream = null; 
@@ -47,6 +56,9 @@ function closeCamera() {
 }
 
 function capturePhoto() {
+  if (!isCamRecording) {
+    return;
+  }
   if (!video || !canvas || video.videoWidth <= 0) return;
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
@@ -58,6 +70,9 @@ function capturePhoto() {
 }
 
 async function sendPhoto(): Promise<void> {
+  if (!isCamRecording) {
+    return;
+  }
   if (!canvas) return;
   const blob = await getBlob(canvas);
   if (!blob) {
@@ -71,6 +86,9 @@ async function sendPhoto(): Promise<void> {
 }
 
 function showPreviewMode() {
+  if (!isCamRecording) {
+    return;
+  }
   if (camControls) camControls.style.display = 'flex';
   if (btnBack) btnBack.hidden = false;
   if (video) video.hidden = true;
@@ -80,6 +98,9 @@ function showPreviewMode() {
 }
 
 function showCameraMode() {
+  if (!isCamRecording) {
+    return;
+  }
   if (video) video.hidden = false;
   if (canvas) canvas.hidden = true;
   if (btnCapture) btnCapture.style.display = 'block';

@@ -1,5 +1,5 @@
 import styles from "@styles/OtherUserMessage.module.css";
-import FileRender from "@utils/FileRender";
+import FileRender from "@/components/FileRender";
 
 export default function OtherUserMessage({ message }) {
   return (
@@ -8,9 +8,13 @@ export default function OtherUserMessage({ message }) {
         <div className={styles.messageUsername}>{message.username}</div>
       </header>
       <div className={styles.messageContent}>
-      <div className={styles.messageText}>{message.message}</div>
+      <div className={styles.messageText}>{message.content}</div>
       <div className={styles.messageMedia}>
-        {FileRender.renderMedia(message.file)}
+          <FileRender
+            fileUrl={message.file_url}
+            fileType={message.file_type}
+            fileName={message.file_name}
+          />
       </div>
       </div>
       <div className={styles.messageTime}>

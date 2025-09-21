@@ -24,8 +24,9 @@
       "@types/*": ["./src/types/*"],
       "@events/*": ["./src/events/*"],
       "@handlers/*": ["./src/handlers/*"],
-      "@ui/*": ["./src/ui/*"]
-
+      "@ui/*": ["./src/ui/*"],
+      "@config/*": ["./src/config/*"],
+      "@libs/*": ["./src/libs/*"]
     }
   }
 }

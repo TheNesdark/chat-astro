@@ -1,4 +1,4 @@
-import messageService from "../services/MessageService";
+import { send } from "@services/SocketService";
 const commandHandler = (message: any) => {
     const args = message.message.slice(1).split(" ");
     const command = args.shift()?.toLowerCase();
@@ -6,15 +6,13 @@ const commandHandler = (message: any) => {
 
     switch (command) {
         case "clear":
-            messageService.clearChat();
+            send("clearChat", null);
             break;
         case "ask":
-            messageService.sendMessage(message)
-            messageService.ask(prompt);
+            send("ask", { message, prompt });
             break;
         case "image":
-            messageService.sendMessage(message)
-            messageService.generateImage(prompt);
+            send("image", { message, prompt });
             break;
             
         default:

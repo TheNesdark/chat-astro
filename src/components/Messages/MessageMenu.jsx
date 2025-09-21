@@ -1,6 +1,6 @@
 import { useState } from 'react';  
 import styles from '@styles/UserMessage.module.css';  
-import messageService from '@services/MessageService';
+import { send } from '@services/SocketService';
 
 export default function MessageMenu({ messageId }) {  
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ export default function MessageMenu({ messageId }) {
 
   const handleDelete = (e) => {
     e.preventDefault(); 
-    messageService.deleteMessage(messageId);  
+    send("deleteMessage", messageId);  
     const openDetails = document.querySelectorAll('details[open]');
     openDetails.forEach(detail => detail.open = false);
     setIsOpen(false); 

@@ -1,8 +1,8 @@
-import SocketManager from "./modules/SocketManager";
+import socketEvents from "./events/socketEvents";
+import { connect } from "./services/SocketService";
 
-const username = "andres"
-SocketManager.init(username);
 
 window.addEventListener("ReactReady", () => {
-    SocketManager.connect();
+    socketEvents();
+    connect();
 });

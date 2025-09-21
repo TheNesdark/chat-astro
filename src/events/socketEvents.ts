@@ -1,18 +1,25 @@
-import type { Socket } from "socket.io-client";
 import  chatUI  from "../ui/chatUI";
+import { on, off } from "../services/SocketService";
 
-const socketEvents = (socket: Socket) => {
-    socket.on("connect", () => {
+const socketEvents = () => {
+    const handleConnect = () => {
         chatUI.updateConnectionStatus(true);
-    });
-
-    socket.on("disconnect", () => {
+    }
+    const handleDisconnect = () => {
         chatUI.updateConnectionStatus(false);
-    })
-    
-    socket.on("userCount", (counter: number) => {
+    }
+    const handleUserCount = (counter: number) => {
         chatUI.updateUserCounter(counter);
-    });
+    }
+    on("connect", handleConnect);
+    on("disconnect", handleDisconnect);
+    on("userCount", handleUserCount);
+
+    return () => {
+        off("connect", handleConnect);
+        off("disconnect", handleDisconnect);
+        off("userCount", handleUserCount);
+    }
 
 }
 

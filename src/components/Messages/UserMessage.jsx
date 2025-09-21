@@ -1,5 +1,5 @@
 import styles from '@styles/UserMessage.module.css';
-import FileRender from '@utils/FileRender';
+import FileRender from '../FileRender';
 import MessageMenu from './MessageMenu'; 
 
 export default function UserMessage({ message }) {
@@ -7,9 +7,13 @@ export default function UserMessage({ message }) {
     <div className={`${styles.message}`}>
       <MessageMenu messageId={message.id} />
       <div className={styles.messageContent}>
-        <div className={styles.messageText}>{message.message}</div>
+        <div className={styles.messageText}>{message.content}</div>
         <div className={styles.messageMedia}>
-          {FileRender.renderMedia(message.file)}
+          <FileRender
+            fileUrl={message.file_url}
+            fileType={message.file_type}
+            fileName={message.file_name}
+          />
         </div>
       </div>
       

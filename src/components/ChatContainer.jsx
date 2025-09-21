@@ -5,10 +5,9 @@ import SystemMessage from "./Messages/SystemMessage.jsx";
 import styles from "@styles/ChatContainer.module.css";
 
 
-export default function ChatContainer() {
-
-    const currentUser = "user";
+export default function ChatContainer({user}) {
     const { messages } = useMessages();
+    const userID = user?.id || "";
 
     return (
         <section className={styles.container}>
@@ -18,7 +17,7 @@ export default function ChatContainer() {
                 </div>
             ) : (
                 messages.slice().reverse().map((message, index) => {
-                    if (message.username === currentUser) {
+                    if (message.user_id === userID) {
                         return <UserMessage key={index} message={message} />;
                     } else if (message.username === "System") {
                         return <SystemMessage key={index} message={message} />;

@@ -1,10 +1,22 @@
+---
+const { firstLetter } = Astro.props;
+---
+
 <link rel="stylesheet" href="/src/styles/ChatHeader.css" />
 <header class="header">
   <h3 class="title">Sena Chat</h3>
-  <div class="info">
-    <div id="status" class="loading"></div>
-    <div class="count">
-      <span id="userCounter" class="count-counter">0</span> usuarios conectados
+  <div class="header-info">
+    <div class="info">
+      <div id="status" class="loading"></div>
+      <div class="count">
+        <span id="userCounter" class="count-counter">0</span> usuarios conectados
+      </div>
+    </div>
+    <div id="logoutButton" class="logout-button" title="Cerrar sesión">
+      <div class="user-photo">
+        <span class="user-initial">{firstLetter}</span>
+      </div>
     </div>
   </div>
 </header>
+<script type="module" src="/src/handlers/Components/ChatHeaderHandler.ts"></script>

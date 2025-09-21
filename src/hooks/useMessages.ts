@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Message } from "@/types";
-import SocketManager from "@/modules/SocketManager";
+import { on, off } from "@services/SocketService";
 
 
 function useMessages() {
@@ -24,23 +24,19 @@ function useMessages() {
 
 
     useEffect(() => {
-        const socket = SocketManager.getSocket();
-        if (!socket) {
-            throw new Error("Socket no inicializado");
-        }
-        socket.on("newMessage", newMessage);
-        socket.on("loadMessages", loadMessages);
-        socket.on("clearChat", clearMessages);
-        socket.on("deleteMessage", deleteMessage);
-        socket.on("systemMessage", newMessage);
+        on("newMessage", newMessage);
+        on("loadMessages", loadMessages);
+        on("clearChat", clearMessages);
+        on("deleteMessage", deleteMessage);
+        on("systemMessage", newMessage);
 
         window.dispatchEvent(new Event("ReactReady"));
 
         return () => {
-            socket.off("newMessage", newMessage);
-            socket.off("loadMessages", loadMessages);
-            socket.off("clearMessages", clearMessages);
-            socket.off("deleteMessage", deleteMessage);
+            off("newMessage", newMessage);
+            off("loadMessages", loadMessages);
+            off("clearChat", clearMessages);
+            off("deleteMessage", deleteMessage);
         };
 
     }, []);

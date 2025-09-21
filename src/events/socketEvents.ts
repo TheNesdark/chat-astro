@@ -10,6 +10,7 @@ const socketEvents = () => {
     }
     const handleUserCount = (counter: number) => {
         chatUI.updateUserCounter(counter);
+        console.log("Usuarios conectados:", counter);
     }
     on("connect", handleConnect);
     on("disconnect", handleDisconnect);

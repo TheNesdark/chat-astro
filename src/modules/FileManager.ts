@@ -1,5 +1,5 @@
 import  chatUI from "@/ui/chatUI";
-import type { fileData } from "@/types";
+
 
 class FileManager {
     private static file: File | null = null;
@@ -11,25 +11,6 @@ class FileManager {
 
     public static getFile() {
         return this.file;
-    }
-
-    public static async getFileAsBuffer(): Promise<fileData | null> {
-        try {
-            const file = this.getFile();
-            if (!file) return null;
-            
-            const buffer = await file.arrayBuffer();
-
-            return {
-                buffer: buffer,
-                type: file.type,
-                name: file.name,
-            };
-
-        } catch (error) {
-            console.error(error);
-            return null;
-        }
     }
 
     public static clearFile() {

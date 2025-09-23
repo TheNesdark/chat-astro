@@ -27,7 +27,7 @@ function useMessages() {
         on("newMessage", newMessage);
         on("loadMessages", loadMessages);
         on("clearChat", clearMessages);
-        on("deleteMessage", deleteMessage);
+        on("messageDeleted", deleteMessage);
         on("systemMessage", newMessage);
 
         window.dispatchEvent(new Event("ReactReady"));
@@ -36,7 +36,8 @@ function useMessages() {
             off("newMessage", newMessage);
             off("loadMessages", loadMessages);
             off("clearChat", clearMessages);
-            off("deleteMessage", deleteMessage);
+            off("messageDeleted", deleteMessage);
+            off("systemMessage", newMessage);
         };
 
     }, []);

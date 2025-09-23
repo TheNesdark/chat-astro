@@ -1,8 +1,19 @@
 import FileManager from "@modules/FileManager";
 import { send } from "@services/SocketService";
 import commandHandler from "../commandhandler";
+import type { MessageData } from "@/types";
+import { actions } from "astro:actions";
 
 const form = document.getElementById("messageForm");
+const input = form.querySelector("input[name='message']") as HTMLInputElement;
+const comands = form.querySelector(".comands")
+
+input.addEventListener("change", () => {
+  const message = input.value.trim();
+  if (message.startsWith("/")) {
+    comands.style
+  }
+})
 
 form?.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -10,7 +21,7 @@ form?.addEventListener("submit", async (e) => {
   const message = target.message.value.trim();
   if (!message && !FileManager.hasFile()) return;
 
-    const messageData: any = {
+    const messageData: MessageData = {
     content: message,
     file_url: null,
     file_type: null,
@@ -25,22 +36,16 @@ form?.addEventListener("submit", async (e) => {
 
   if (FileManager.hasFile()) {
      const fileData = FileManager.getFile()
-     const File = new FormData();
-     File.append('file', fileData);
-     const response = await fetch('/api/uploadFile', {
-       method: 'POST',
-       body: File
-     });
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error uploading file:', errorText);
-        return;
-      }
-
-      const { publicUrl, type, name } = await response.json();
-      messageData.file_url = publicUrl;
-      messageData.file_type = type;
-      messageData.file_name = name;
+     const formData = new FormData();
+     formData.append("file", fileData);
+     const { data , error} = await actions.uploadFile( formData);
+     if (error) {
+       console.error(error);
+       return;
+     }
+     messageData.file_url = data.publicUrl;
+     messageData.file_type = data.type;
+     messageData.file_name = data.name;
   }
 
 

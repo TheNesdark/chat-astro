@@ -2,20 +2,57 @@ import CamHandler from "@/handlers/Files/CamHandler";
 import MicHandler from "@/handlers/Files/MicHandler";
 import FileHandler from "@/handlers/Files/FileHandler";
 
-const attachButton = document.getElementById('attachButton');
-const details = attachButton?.querySelector('details');
-const fileInput = attachButton?.querySelector('input[type="file"]');
-const btnMicrophone = attachButton?.querySelector('#BtnMicrophone');
-const btnCamera = attachButton?.querySelector('#BtnCamera');
+class AttachButtonHandler {
+  private attachButton: HTMLElement | null = null;
+  private details: HTMLDetailsElement | null = null;
+  private fileInput: HTMLInputElement | null = null;
+  private btnMicrophone: HTMLElement | null = null;
+  private btnCamera: HTMLElement | null = null;
 
-if (attachButton && details && fileInput && btnMicrophone && btnCamera) {
-  document.addEventListener('click', (e) => {
-    if (!attachButton.contains(e.target as Node)) {
-      details.open = false;
+  constructor() {
+    this.initializeElements();
+    this.attachEventListeners();
+  }
+
+  private initializeElements() {
+    this.attachButton = document.getElementById('attachButton');
+    this.details = this.attachButton?.querySelector('details') as HTMLDetailsElement;
+    this.fileInput = this.attachButton?.querySelector('input[type="file"]') as HTMLInputElement;
+    this.btnMicrophone = this.attachButton?.querySelector('#BtnMicrophone') as HTMLElement;
+    this.btnCamera = this.attachButton?.querySelector('#BtnCamera') as HTMLElement;
+  }
+
+  private attachEventListeners() {
+    if (this.attachButton && this.details && this.fileInput && this.btnMicrophone && this.btnCamera) {
+      // Cerrar details al hacer click fuera
+      document.addEventListener('click', (e) => {
+        if (!this.attachButton?.contains(e.target as Node)) {
+          this.details!.open = false;
+        }
+      });
+
+      // Event listeners para cada handler
+      this.btnMicrophone.addEventListener('click', MicHandler);
+      this.btnCamera.addEventListener('click', CamHandler);
+      this.fileInput.addEventListener('change', FileHandler);
     }
-  });
+  }
 
-  btnMicrophone.addEventListener('click', MicHandler);
-  btnCamera.addEventListener('click', CamHandler);
-  fileInput.addEventListener('change', FileHandler);
+  // Método para cerrar el details programáticamente
+  closeDetails(): void {
+    if (this.details) {
+      this.details.open = false;
+    }
+  }
+
+  // Método para obtener el estado del details
+  isDetailsOpen(): boolean {
+    return this.details?.open || false;
+  }
 }
+
+// Crear instancia única
+const attachButtonHandler = new AttachButtonHandler();
+
+// Exportar la instancia para uso externo si es necesario
+export default attachButtonHandler;

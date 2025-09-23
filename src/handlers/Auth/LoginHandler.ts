@@ -1,3 +1,4 @@
+import { actions } from "astro:actions";
 const form = document.getElementById('loginForm') as HTMLFormElement;
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -17,23 +18,20 @@ form.addEventListener('submit', async (e) => {
 
     const formData = new FormData(data);
     try {
-        const response = await fetch('/api/auth/signIn', {
-            method: 'POST',
-            body: formData,
-        });
+        const { data, error } = await actions.login(formData);
 
-        if (response.ok) {
+        if (error) {
+            showMessage(error.message || 'Error en el login.');
+            return;
+        }
+
+        if (data?.success) {
             showMessage('Login exitoso. Redirigiendo...', false);
             window.location.href = '/';
-            return;
-
-        } else {
-
-            const errorText = await response.text();
-            showMessage(errorText || 'Error en el login.');
         }
     } catch (err) {
-        console.error('Error en fetch:', err);
+        console.error('Error al ejecutar la Action:', err);
+        showMessage('Ha ocurrido un error inesperado.');
     }
 });
 

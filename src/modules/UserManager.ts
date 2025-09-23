@@ -3,8 +3,6 @@
 class UserManager {
     private static username: string | null = null;
 
-
-
     public static getUsername(): string | null {
         return this.username;
     }

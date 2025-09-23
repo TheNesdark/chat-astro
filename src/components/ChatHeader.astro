@@ -1,5 +1,5 @@
 ---
-const { firstLetter } = Astro.props;
+const { user } = Astro.props;
 ---
 
 <link rel="stylesheet" href="/src/styles/ChatHeader.css" />
@@ -13,9 +13,11 @@ const { firstLetter } = Astro.props;
       </div>
     </div>
     <div id="logoutButton" class="logout-button" title="Cerrar sesión">
-      <div class="user-photo">
-        <span class="user-initial">{firstLetter}</span>
-      </div>
+        {user.avatar ? 
+        <img  class="user-photo" src={user.avatar} alt="Avatar" /> 
+        : (
+        <span class="user-initial">{user.username.charAt(0).toUpperCase()}</span>
+        )}
     </div>
   </div>
 </header>

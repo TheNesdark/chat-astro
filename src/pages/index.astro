@@ -5,82 +5,58 @@ import ChatContainer from "@components/ChatContainer.jsx";
 import ChatSend from "@components/ChatSend.astro";
 import "../styles/global.css";
 import CamViewer from "@components/CamViewer.astro";
-import { getCurrentUser, refreshSession } from "@/services/Auth";  // Agrega refreshSession
+import { getCurrentUser, refreshSession } from "@/services/Auth";
 
 const accessToken = Astro.cookies.get("sb-access-token")?.value;
 const refreshToken = Astro.cookies.get("sb-refresh-token")?.value;
-
 if (!accessToken || !refreshToken) {
   return Astro.redirect("/Login");
 }
 
 let user = null;
-
 try {
-  // Valida access_token primero
   user = await getCurrentUser(accessToken);
-  
   if (!user) {
     throw new Error("Token inválido");
   }
-  
-  console.log("Token válido, user cargado:", user.email);
 } catch (validateError) {
-  // Si error 401 (expirado) y hay refresh_token, refresca
-  if (validateError.message.includes("401") && refreshToken) {
-    console.log("Token expirado, refrescando server-side...");
-    
-    try {
-      const refreshData = await refreshSession(refreshToken);
-      
-      if (!refreshData.session) {
-        throw new Error("No se pudo refrescar");
-      }
+  try {
+    const refreshData = await refreshSession(refreshToken);
 
-      // Actualiza cookies con nuevos tokens
-      Astro.cookies.set("sb-access-token", refreshData.session.access_token, {
-        httpOnly: true,
-        secure: import.meta.env.PROD,
-        sameSite: "strict",
-        path: "/",
-        maxAge: 60 * 60 * 24  // 24h
-      });
-
-      Astro.cookies.set("sb-refresh-token", refreshData.session.refresh_token, {
-        httpOnly: true,
-        secure: import.meta.env.PROD,
-        sameSite: "strict",
-        path: "/",
-        maxAge: 60 * 60 * 24 * 7  // 7 días
-      });
-
-      // Obtén user del refresh
-      user = refreshData.user || await getCurrentUser(refreshData.session.access_token);
-      
-      console.log("Sesión refrescada server-side:", user.email);
-    } catch (refreshError) {
-      console.error("Error refrescando:", refreshError);
-      // Limpia cookies
-      Astro.cookies.delete("sb-access-token", { path: "/" });
-      Astro.cookies.delete("sb-refresh-token", { path: "/" });
-      return Astro.redirect("/Login");
+    if (!refreshData.session) {
+      throw new Error("No se pudo refrescar");
     }
-  } else {
-    // Otro error: limpia y redirige
-    console.error("Error validando:", validateError);
-    Astro.cookies.delete("sb-access-token", { path: "/" });
-    Astro.cookies.delete("sb-refresh-token", { path: "/" });
-    return Astro.redirect("/Login");
+
+    Astro.cookies.set("sb-access-token", refreshData.session.access_token, {
+      httpOnly: true,
+      secure: import.meta.env.PROD,
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 60 * 24, // 24h
+    });
+
+    Astro.cookies.set("sb-refresh-token", refreshData.session.refresh_token, {
+      httpOnly: true,
+      secure: import.meta.env.PROD,
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7, // 7 días
+    });
+
+    user = refreshData.user;
+
+    console.log("Sesión refrescada server-side:", user.email);
+  } catch (error) {
+    console.error("Error refrescando:", error.message);
   }
 }
 
-// Si llega aquí, user es válido
-if (!user) {
-  return Astro.redirect("/Login");
-}
-
-const username = user.user_metadata.display_name || "U";
-const firstLetter = username.charAt(0).toUpperCase();
+const userData = {
+  id: user.id,
+  email: user.email,
+  username: user.user_metadata.display_name,
+  avatar: user.user_metadata.avatar_url,
+};
 ---
 
 <!doctype html>
@@ -91,18 +67,14 @@ const firstLetter = username.charAt(0).toUpperCase();
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
-
   </head>
-  <body >
-  <Header firstLetter={firstLetter} />
-  <ChatContainer
-    client:load
-    user={user}
-  />
-  <ChatSend />
-  <CamViewer />
-</body>
-<script type="module" src="/src/main.js" defer></script>
+  <body>
+    <Header user={userData} />
+    <ChatContainer client:load user={user} />
+    <ChatSend />
+    <CamViewer />
+  </body>
+  <script type="module" src="/src/main.js" defer></script>
 </html>
 
 <style>
@@ -119,4 +91,3 @@ const firstLetter = username.charAt(0).toUpperCase();
     background: #1e1e1e;
   }
 </style>
-

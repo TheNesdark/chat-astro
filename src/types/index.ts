@@ -1,12 +1,17 @@
 export interface Message {
     id: string;
+    user_id: string;
     username: string;
-    message: string;
-    file?: File;
+    content: string;
+    file_url: string;
+    file_type: string;
+    file_name: string;
     timestamp: number;
 }
-export interface fileData {
-    buffer: ArrayBuffer;
-    type: string;
-    name: string;
+
+export interface MessageData {
+    content: string;
+    file_url: string | null;
+    file_type: string | null;
+    file_name: string | null;
 }

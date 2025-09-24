@@ -1,28 +1,13 @@
 ---
 import AttachButton from "./AttachButton.astro";
+import ChatForm from "@components/ChatForm.jsx"
 ---
 
 <link rel="stylesheet" href="/src/styles/ChatSend.css" />
 <footer class="chatSend">
   <AttachButton />
-  <form id="messageForm" class="form">
-    <div class="comands">
-      <li>
-        <h1>Comandos</h1>
-        <h1>/Ask</h1>
-      </li>
-    </div>
-    <input
-      name="message"
-      type="text"
-      placeholder="Escribe un mensaje..."
-      class="input"
-    />
-    <button type="submit" class="send">
-      <img src="/src/assets/icons/send.svg" alt="send" class="icon" />
-    </button>
-  </form>
+  <ChatForm client:load/>
 </footer>
 
-<script type="module" src="/src/handlers/Components/ChatSendHandler.ts"></script>
+
 

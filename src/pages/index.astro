@@ -9,11 +9,13 @@ import { getCurrentUser, refreshSession } from "@/services/Auth";
 
 const accessToken = Astro.cookies.get("sb-access-token")?.value;
 const refreshToken = Astro.cookies.get("sb-refresh-token")?.value;
+
 if (!accessToken || !refreshToken) {
   return Astro.redirect("/Login");
 }
 
 let user = null;
+
 try {
   user = await getCurrentUser(accessToken);
   if (!user) {
@@ -51,11 +53,22 @@ try {
   }
 }
 
+
+if (!user) {
+  console.error("User sigue null después de refresh, redirigiendo");
+  Astro.redirect("/Login");
+}
+
+
+const userMetadata = user.user_metadata || {};
+const displayName = userMetadata.display_name || user.email?.split('@')[0] || 'Usuario';
+const avatarUrl = userMetadata.avatar_url || null;
+
 const userData = {
   id: user.id,
   email: user.email,
-  username: user.user_metadata.display_name,
-  avatar: user.user_metadata.avatar_url,
+  username: displayName,
+  avatar: avatarUrl,
 };
 ---
 

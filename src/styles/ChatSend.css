@@ -11,9 +11,10 @@
 
 .form {
   background: #2a2a2a;
+  position: relative;
   display: flex;
   width: 100%;
-    font-size: 12px;
+  font-size: 12px;
   gap: 12px;
   align-items: center;
   z-index: 10;
@@ -64,4 +65,60 @@
 .comands.show{
   display:flex;
   flex-direction: column;
+}
+
+.commands-panel {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background: #2a2a2a;
+    border: 1px solid #525252;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    z-index: 1000;
+    color: #ffffff;
+}
+
+.commands-panel h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.commands-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.commands-panel li {
+    padding: 6px 0;
+    font-size: 13px;
+    color: #cccccc;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+.commands-panel li:last-child {
+    border-bottom: none;
+}
+
+.commands-panel code {
+    background: #404040;
+    color: #ff6b35;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-weight: 500;
+}
+
+.commands-panel li:hover {
+    background: #333333;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 0 -4px;
 }

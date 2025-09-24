@@ -1,6 +1,6 @@
 import { send } from "@services/SocketService";
 const commandHandler = (message: any) => {
-    const args = message.message.slice(1).split(" ");
+    const args = message.slice(1).split(" ");
     const command = args.shift()?.toLowerCase();
     const prompt = args.join(" ");
 
@@ -9,12 +9,11 @@ const commandHandler = (message: any) => {
             send("clearChat", null);
             break;
         case "ask":
-            send("ask", { message, prompt });
+            send("ask", prompt );
             break;
         case "image":
-            send("image", { message, prompt });
+            send("image", prompt );
             break;
-            
         default:
             console.log(`Unknown command: ${command}`);
             break;

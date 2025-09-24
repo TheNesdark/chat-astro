@@ -56,7 +56,7 @@ export async function getCurrentUser(accessToken) {
 }
 
 export async function refreshSession(refreshToken: string) {
-    const { data, error } = await supabase.auth.refreshSession(refreshToken);
+    const { data, error } = await supabase.auth.refreshSession({ refresh_token: refreshToken });
     if (error) {
         throw error;
     }

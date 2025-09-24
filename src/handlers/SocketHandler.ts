@@ -1,7 +1,7 @@
 import  chatUI  from "../ui/chatUI";
 import { on, off } from "../services/SocketService";
 
-const socketEvents = () => {
+const socketHandler = () => {
     const handleConnect = () => {
         chatUI.updateConnectionStatus(true);
     }
@@ -25,4 +25,4 @@ const socketEvents = () => {
 }
 
 
-export default socketEvents;
+export default socketHandler;

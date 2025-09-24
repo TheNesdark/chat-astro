@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import type { Message } from "@/types";
-import { on, off } from "@services/SocketService";
-
-
+import type { Message , MessageData} from "@/types";
+import { on, off, send } from "@services/SocketService";
+import FileManager from "@/modules/FileManager";
+import { actions } from "astro:actions";
+import commandHandler from "@/handlers/commandhandler";
 function useMessages() {
     const [messages, setMessages] = useState<Message[]>([]);
+    const [messageInput, setMessageInput] = useState("");
 
     const loadMessages = (messages: Message[]) => {
         setMessages(messages);
@@ -22,6 +24,38 @@ function useMessages() {
         setMessages(prevMessages => prevMessages.filter(message => message.id !== id));
     };
 
+    const sendMessage = async (e) => {
+        e.preventDefault();
+        if (!messageInput && !FileManager.hasFile()) return;
+
+        if (messageInput.startsWith("/")) {
+            commandHandler(messageInput);
+        }
+
+        let messageData: MessageData = {
+            content: messageInput,
+            file_url: null,
+            file_type: null,
+            file_name: null,
+        };
+
+        if (FileManager.hasFile()) {
+            const file = FileManager.getFile();
+            const { data , error } = await actions.uploadFile({ file });
+            if (error) {
+                console.error("Error uploading file:", error);
+                return;
+            }
+            messageData.file_url = data.publicUrl;
+            messageData.file_type = data.type;
+            messageData.file_name = data.name;
+        }
+
+        
+        send("sendMessage", messageData);
+        setMessageInput("");
+        FileManager.clearFile();
+    };
 
     useEffect(() => {
         on("newMessage", newMessage);
@@ -42,7 +76,7 @@ function useMessages() {
 
     }, []);
 
-    return { messages };
+    return { messages, messageInput, setMessageInput, sendMessage };
 }
 
 export default useMessages;

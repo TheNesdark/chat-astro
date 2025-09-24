@@ -1,5 +1,5 @@
 import styles from "@styles/OtherUserMessage.module.css";
-import FileRender from "@/components/FileRender";
+import FileRender from "@/components/Messages/FileRender";
 
 export default function OtherUserMessage({ message }) {
   return (

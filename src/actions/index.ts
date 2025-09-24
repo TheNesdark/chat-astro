@@ -1,6 +1,6 @@
 
 import { defineAction } from 'astro:actions';
-import { z } from 'zod'; // Corregido: Zod se importa de 'zod'
+import { z } from 'zod'; 
 import { uploadChatFile , uploadAvatar } from "@/services/SupabaseServices";
 import { signIn, signUp , signOut} from "@/services/Auth";
 
@@ -84,6 +84,8 @@ export const server = {
 
   // Action para logout
   logout: defineAction({
+    accept: 'json',
+    input: z.object({}),
     handler: async ({}, { cookies }) => {
       try {
         await signOut();

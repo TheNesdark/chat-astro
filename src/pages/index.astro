@@ -4,8 +4,8 @@ import Header from "@components/ChatHeader.astro";
 import ChatContainer from "@components/ChatContainer.jsx";
 import ChatSend from "@components/ChatSend.astro";
 import "../styles/global.css";
-import CamViewer from "@components/CamViewer.astro";
-import { getCurrentUser, refreshSession } from "@/services/Auth";
+import CamViewer from "@components/modals/CamViewer.astro";
+import { getCurrentUser, refreshSession, clearCookies } from "@/services/Auth";
 
 const accessToken = Astro.cookies.get("sb-access-token")?.value;
 const refreshToken = Astro.cookies.get("sb-refresh-token")?.value;
@@ -21,6 +21,7 @@ try {
   if (!user) {
     throw new Error("Token inválido");
   }
+
 } catch (validateError) {
   try {
     const refreshData = await refreshSession(refreshToken);
@@ -47,16 +48,15 @@ try {
 
     user = refreshData.user;
 
-    console.log("Sesión refrescada server-side:", user.email);
   } catch (error) {
-    console.error("Error refrescando:", error.message);
+    clearCookies(Astro.cookies);
+    return Astro.redirect("/Login");
   }
 }
 
 
 if (!user) {
-  console.error("User sigue null después de refresh, redirigiendo");
-  Astro.redirect("/Login");
+  return Astro.redirect("/Login");
 }
 
 

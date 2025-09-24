@@ -1,4 +1,5 @@
 import supabase from "@/libs/Supabase"
+import type { AstroCookies } from "astro";
 
 interface User {
     email: string;
@@ -61,4 +62,9 @@ export async function refreshSession(refreshToken: string) {
         throw error;
     }
     return data; 
+}
+
+export async function clearCookies(cookies: AstroCookies){
+    cookies.delete("sb-access-token");
+    cookies.delete("sb-refresh-token");
 }

@@ -15,6 +15,10 @@ const chatUI = {
         const attachButton = document.getElementById("attachButton")!;
         attachButton.classList.toggle("recording", status);
     },
+    addAlert: (message: string, type: string) => {
+        const event = new CustomEvent("alert", { detail: { message, type } });
+        window.dispatchEvent(event);
+    },
 }
 
 export default chatUI;

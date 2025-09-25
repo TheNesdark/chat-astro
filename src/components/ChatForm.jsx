@@ -2,6 +2,7 @@ import "@styles/ChatSend.css"
 import useMessages from "@hooks/useMessages.ts"
 import { useState } from "react"
 
+
 export default function ChatForm() {
     const { messageInput, setMessageInput, sendMessage } = useMessages()
     const [showCommands, setShowCommands] = useState(false)
@@ -10,6 +11,7 @@ export default function ChatForm() {
         const value = e.target.value
         setMessageInput(value)
         setShowCommands(value.startsWith("/"))
+
     }
 
     return (

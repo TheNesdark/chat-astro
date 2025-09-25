@@ -1,5 +1,5 @@
 import FileManager from "@modules/FileManager";
-import chatUI from "@ui/chatUI";
+import chatUI from "@/utils/chatUI";
 
 class MicrophoneHandler {
   private isRecording: boolean = false;

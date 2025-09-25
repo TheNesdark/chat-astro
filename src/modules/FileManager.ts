@@ -1,4 +1,4 @@
-import  chatUI from "@/ui/chatUI";
+import  chatUI from "@/utils/chatUI";
 
 
 class FileManager {

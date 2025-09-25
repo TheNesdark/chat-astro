@@ -1,6 +1,6 @@
 import supabase from "@/libs/Supabase";
 
-export async function uploadChatFile(file: File): Promise<{ publicUrl: string; type: string; name: string }> {
+export async function uploadChatFile(file: File): Promise<{publicUrl: string; type: string; name: string }> {
     const filePath = `${Date.now()}_${file.name}`;
     const type = file.type;
     const name = file.name;
@@ -17,7 +17,7 @@ export async function uploadChatFile(file: File): Promise<{ publicUrl: string; t
         .from('Files')
         .getPublicUrl(filePath);
 
-    return { publicUrl , type , name};
+    return { publicUrl, type, name};
 }
 
 export async function uploadAvatar(file: File): Promise<{publicUrl: string}> {
@@ -33,6 +33,5 @@ export async function uploadAvatar(file: File): Promise<{publicUrl: string}> {
     const { data: { publicUrl } } = supabase.storage
         .from('Avatar')
         .getPublicUrl(filePath);
-
     return { publicUrl };
 }

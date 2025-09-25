@@ -4,9 +4,11 @@ import { on, off, send } from "@services/SocketService";
 import FileManager from "@/modules/FileManager";
 import { actions } from "astro:actions";
 import commandHandler from "@/handlers/commandhandler";
+import  useAlerts  from "./useAlerts";
 function useMessages() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [messageInput, setMessageInput] = useState("");
+    const { addAlert } = useAlerts();
 
     const loadMessages = (messages: Message[]) => {
         setMessages(messages);
@@ -53,7 +55,9 @@ function useMessages() {
 
         
         send("sendMessage", messageData);
+
         setMessageInput("");
+        addAlert("Mensaje enviado", "success" );
         FileManager.clearFile();
     };
 

@@ -58,7 +58,7 @@ export async function refreshSession(refreshToken: string) {
     return data; 
 }
 
-export async function clearCookies(cookies: AstroCookies){
+export async function clearCookies(cookies: AstroCookies): Promise<void> {
     cookies.delete("sb-access-token");
     cookies.delete("sb-refresh-token");
 }

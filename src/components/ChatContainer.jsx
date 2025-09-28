@@ -16,13 +16,13 @@ export default function ChatContainer({user}) {
                     No hay mensajes aún...
                 </div>
             ) : (
-                messages.slice().reverse().map((message, index) => {
+                messages.slice().reverse().map((message) => {
                     if (message.user_id === userID) {
-                        return <UserMessage key={index} message={message} />;
+                        return <UserMessage key={message.id} message={message} />;
                     } else if (message.username === "System") {
-                        return <SystemMessage key={index} message={message} />;
+                        return <SystemMessage key={message.id} message={message} />;
                     } else {
-                        return <OtherUserMessage key={index} message={message} />;
+                        return <OtherUserMessage key={message.id} message={message} />;
                     }
                 })
             )}

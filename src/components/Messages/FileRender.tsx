@@ -1,4 +1,4 @@
-import React from 'react';
+
 import type { FileRenderProps } from '@/types';
 
 const FileRender: React.FC<FileRenderProps> = ({ fileUrl, fileType, fileName }) => {

@@ -1,0 +1,219 @@
+.chat-footer {
+  display: flex;
+  flex-shrink: 0;
+  background: #2a2a2a;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  font-size: 12px;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  filter: invert(1);
+}
+
+/* ChatForm Styles */
+.chat-form {
+  background: #2a2a2a;
+  position: relative;
+  display: flex;
+  width: 100%;
+  font-size: 12px;
+  gap: 12px;
+  align-items: center;
+  z-index: 10;
+}
+
+.chat-input {
+  position: relative;
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #525252;
+  border-radius: 6px;
+  font-size: 16px;
+  background: #333333;
+  color: #ffffff;
+  min-height: 44px;
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: #ff6b35;
+  background: #404040;
+}
+
+.chat-send-button {
+  background: transparent;
+  border: none;
+  padding: 14px;
+  font-size: 14px;
+  cursor: pointer;
+  min-height: 48px;
+  min-width: 48px;
+  display: grid;
+  place-items: center;
+}
+
+.chat-commands-panel {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background: #2a2a2a;
+  border: 1px solid #525252;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  color: #ffffff;
+}
+
+.chat-commands-panel h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.chat-commands-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-commands-panel li {
+  padding: 6px 0;
+  font-size: 13px;
+  color: #cccccc;
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.chat-commands-panel li:last-child {
+  border-bottom: none;
+}
+
+.chat-commands-panel code {
+  background: #404040;
+  color: #ff6b35;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-weight: 500;
+}
+
+.chat-commands-panel li:hover {
+  background: #333333;
+  border-radius: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin: 0 -4px;
+}
+
+/* AttachButton Styles */
+.attach-button {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.attach-button.has-file::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  display: flex;
+  background-color: chocolate;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.attach-button.recording {
+  background: #ee2323;
+  animation: recording-pulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 0 0 rgba(238, 35, 35, 0.7);
+}
+
+.attach-button.recording details {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.attach-menu {
+  position: absolute;
+  bottom: 40px;
+  left: -5px;
+  background: #2d2d2d;
+  border: 1px solid #404040;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.attach-menu label,
+.attach-menu button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.attach-button details {
+  display: grid;
+  place-items: center;
+}
+
+.attach-button summary {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  list-style: none;
+}
+
+.attach-button summary::marker,
+.attach-button details::marker,
+.attach-button summary::-webkit-details-marker,
+.attach-button details::-webkit-details-marker {
+  display: none;
+}
+
+@keyframes recording-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(238, 35, 35, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(238, 35, 35, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(238, 35, 35, 0);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .btn-camera {
+    display: none !important;
+  }
+}
+
+@media (pointer: coarse) {
+  .btn-camera {
+    display: none !important;
+  }
+}

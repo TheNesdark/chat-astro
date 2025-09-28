@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 interface FileRenderProps {
     fileUrl: string;
     fileType: string;
@@ -7,13 +6,24 @@ interface FileRenderProps {
 }
 
 const FileRender: React.FC<FileRenderProps> = ({ fileUrl, fileType, fileName }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
  
     if (!fileUrl || !fileType) return null;
 
     // Render para imagen 
     if (fileType.startsWith('image/')) {
-        return <img src={fileUrl} alt={fileName || 'Imagen'} loading="lazy" />;
-    
+        return (
+            <>
+                <img 
+                    src={fileUrl} 
+                    alt={fileName || 'Imagen'} 
+                    loading="lazy" 
+                    onClick={() => setIsModalOpen(true)}
+                    className="clickable-image"
+                    title="Click para ampliar imagen"
+                />
+            </>
+        );
     }
 
     // Render para video

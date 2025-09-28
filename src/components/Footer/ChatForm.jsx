@@ -1,7 +1,5 @@
-import "@styles/ChatSend.css"
-import useMessages from "@hooks/useMessages.ts"
+import useMessages from "@hooks/useMessages"
 import { useState } from "react"
-
 
 export default function ChatForm() {
     const { messageInput, setMessageInput, sendMessage } = useMessages()
@@ -9,15 +7,24 @@ export default function ChatForm() {
     
     const handleInputChange = (e) => {
         const value = e.target.value
+        if (value.startsWith("/")) {
+            setShowCommands(true)
+        } else {
+            setShowCommands(false)
+        }
         setMessageInput(value)
-        setShowCommands(value.startsWith("/"))
+    }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        sendMessage();
+        setShowCommands(false);
     }
 
     return (
-        <form className="form" onSubmit={sendMessage}>
+        <form className="chat-form" onSubmit={handleSubmit}>
             {showCommands && (
-                <div className="commands-panel">
+                <div className="chat-commands-panel">
                     <h3>Comandos disponibles:</h3>
                     <ul>
                         <li><code>/ask</code> - Pregunta algo</li>
@@ -28,7 +35,7 @@ export default function ChatForm() {
             )}
             
             <input
-                className="input"
+                className="chat-input"
                 name="message"
                 type="text"
                 onChange={handleInputChange}
@@ -39,7 +46,7 @@ export default function ChatForm() {
             />
             
             <button 
-                className="send"
+                className="chat-send-button"
                 type="submit"
             >
                 <img src="/src/assets/icons/send.svg" alt="send" className="icon" />

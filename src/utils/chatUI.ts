@@ -9,7 +9,7 @@ const chatUI = {
     }, 
     updateFileStatus: (status: boolean) => {
         const attachButton = document.getElementById("attachButton")!;
-        attachButton.classList.toggle("HasFile", status);
+        attachButton.classList.toggle("has-file", status);
     },
     updateButtonRecording: (status: boolean) => {
         const attachButton = document.getElementById("attachButton")!;

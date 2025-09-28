@@ -5,14 +5,8 @@ const commandHandler = (message: any) => {
     const prompt = args.join(" ");
 
     switch (command) {
-        case "clear":
-            send("clearChat", null);
-            break;
         case "ask":
             send("ask", prompt );
-            break;
-        case "image":
-            send("image", prompt );
             break;
         default:
             console.log(`Unknown command: ${command}`);

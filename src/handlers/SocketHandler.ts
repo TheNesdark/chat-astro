@@ -1,4 +1,4 @@
-import  chatUI  from "../utils/chatUI";
+import chatUI from "../utils/chatUI";
 import { on, off } from "../services/SocketService";
 
 const socketHandler = () => {
@@ -14,14 +14,20 @@ const socketHandler = () => {
         chatUI.updateUserCounter(counter);
         console.log("Usuarios conectados:", counter);
     }
+
+    const handleError = (error: any) => {
+        chatUI.addAlert("Error: " + error, "danger");
+    }
     on("connect", handleConnect);
     on("disconnect", handleDisconnect);
     on("userCount", handleUserCount);
+    on("messageError", handleError)
 
     return () => {
         off("connect", handleConnect);
         off("disconnect", handleDisconnect);
         off("userCount", handleUserCount);
+        off("messageError", handleError)
     }
 
 }

@@ -4,7 +4,9 @@ import { on, off, send } from "@services/SocketService";
 import FileManager from "@/modules/FileManager";
 import { actions } from "astro:actions";
 import commandHandler from "@/handlers/commandhandler";
-import  useAlerts  from "./useAlerts";
+import useAlerts from "./useAlerts";
+
+let isReactReady = false;
 function useMessages() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [messageInput, setMessageInput] = useState("");
@@ -26,8 +28,7 @@ function useMessages() {
         setMessages(prevMessages => prevMessages.filter(message => message.id !== id));
     };
 
-    const sendMessage = async (e) => {
-        e.preventDefault();
+    const sendMessage = async () => {
         if (!messageInput && !FileManager.hasFile()) return;
 
         if (messageInput.startsWith("/")) {
@@ -43,33 +44,38 @@ function useMessages() {
 
         if (FileManager.hasFile()) {
             const file = FileManager.getFile();
-            const { data , error } = await actions.uploadFile({ file });
+            const FileForm = new FormData
+            FileForm.append("file", file);
+            const { data , error } = await actions.uploadFile(FileForm);
             if (error) {
                 console.error("Error uploading file:", error);
                 return;
             }
             messageData.file_url = data.publicUrl;
             messageData.file_type = data.type;
+            console.log(data.type)
             messageData.file_name = data.name;
         }
 
         
         send("sendMessage", messageData);
-
         setMessageInput("");
         addAlert("Mensaje enviado", "success" );
         FileManager.clearFile();
     };
 
     useEffect(() => {
+        if (isReactReady) return;
         on("newMessage", newMessage);
         on("loadMessages", loadMessages);
         on("clearChat", clearMessages);
         on("messageDeleted", deleteMessage);
         on("systemMessage", newMessage);
 
-        window.dispatchEvent(new Event("ReactReady"));
-
+        const event = new Event("ReactReady");
+        window.dispatchEvent(event);
+        isReactReady = true;
+        
         return () => {
             off("newMessage", newMessage);
             off("loadMessages", loadMessages);
@@ -77,7 +83,6 @@ function useMessages() {
             off("messageDeleted", deleteMessage);
             off("systemMessage", newMessage);
         };
-
     }, []);
 
     return { messages, messageInput, setMessageInput, sendMessage };

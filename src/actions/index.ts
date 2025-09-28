@@ -7,7 +7,7 @@ import { signIn, signUp , signOut} from "@/services/Auth";
 export const server = {
   // Action para subir archivos
   uploadFile: defineAction({
-    accept: 'json',
+    accept: 'form',
     input: z.object({
       file: z.instanceof(File),
     }),

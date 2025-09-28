@@ -22,10 +22,8 @@
       "@layouts/*": ["./src/layouts/*"],
       "@utils/*": ["./src/utils/*"],
       "@types/*": ["./src/types/*"],
-      "@events/*": ["./src/events/*"],
       "@handlers/*": ["./src/handlers/*"],
       "@ui/*": ["./src/ui/*"],
-      "@config/*": ["./src/config/*"],
       "@libs/*": ["./src/libs/*"]
     }
   }

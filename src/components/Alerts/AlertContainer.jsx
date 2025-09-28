@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Alert from "@components/Alert";
+import Alert from "@/components/Alerts/Alert";
 import useAlerts from "@hooks/useAlerts";
 import style from "@styles/Alert.module.css"
 

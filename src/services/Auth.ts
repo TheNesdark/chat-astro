@@ -48,7 +48,7 @@ export async function signOut() : Promise<void> {
     }
 }
 
-export async function getCurrentUser(accessToken) {
+export async function getCurrentUser(accessToken: string) {
     const { data, error } = await supabase.auth.getUser(accessToken);
     if (error) {
         throw error;

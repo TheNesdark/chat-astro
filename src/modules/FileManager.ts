@@ -1,5 +1,4 @@
-import  chatUI from "@/utils/chatUI";
-
+import chatUI from "@/utils/chatUI";
 
 class FileManager {
     private static file: File | null = null;

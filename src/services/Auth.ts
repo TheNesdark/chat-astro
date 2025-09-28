@@ -1,12 +1,6 @@
 import supabase from "@/libs/Supabase"
 import type { AstroCookies } from "astro";
-
-interface User {
-    email: string;
-    password: string;
-    username: string;
-    publicUrl: string | null;
-}
+import type { User } from "@/types";
 
 export async function signUp(user: User) {
     try {

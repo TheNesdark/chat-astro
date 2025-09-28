@@ -1,6 +1,6 @@
 import UserMessage from "./Messages/UserMessage.jsx";
 import OtherUserMessage from "./Messages/OtherUserMessage.jsx";
-import useMessages from "../hooks/useMessages";
+import useMessages from "../hooks/useMessages.tsx";
 import SystemMessage from "./Messages/SystemMessage.jsx";
 import styles from "@styles/ChatContainer.module.css";
 

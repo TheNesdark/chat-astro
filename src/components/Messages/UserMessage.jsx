@@ -1,5 +1,5 @@
 import styles from '@styles/UserMessage.module.css';
-import FileRender from './FileRender';
+import FileRender from './FileRender.tsx';
 import MessageMenu from './MessageMenu'; 
 
 export default function UserMessage({ message }) {

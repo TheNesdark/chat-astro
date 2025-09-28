@@ -1,14 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-
-export interface Alert {
-  id: number;
-  message: string;
-  type: 'success' | 'error' | 'warning' | 'info';
-}
+import type { Alert } from "@/types";
 
 export default function useAlerts() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
-  const idCounter = useRef(0)
+  const idCounter = useRef(0);
+
   const addAlert = (message: string, type: 'success' | 'error' | 'warning' | 'info' = 'info') => {
     const id = idCounter.current++;
     setAlerts(prevAlerts => [...prevAlerts, { id, message, type }]);

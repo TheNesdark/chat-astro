@@ -1,4 +1,4 @@
-import useMessages from "@hooks/useMessages"
+import useMessages from "@hooks/useMessages.tsx"
 import { useState } from "react"
 
 export default function ChatForm() {

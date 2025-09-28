@@ -1,56 +1,44 @@
-import { useState } from 'react';  
+import { useState, useEffect, useRef } from 'react';  
 import styles from '@styles/UserMessage.module.css';  
 import { send } from '@services/SocketService';
 
 export default function MessageMenu({ messageId }) {  
   const [isOpen, setIsOpen] = useState(false);
+  const detailsRef = useRef(null);
 
-  const handleToggle = (e) => {
-    e.preventDefault();  
-    const newOpen = !isOpen;  
-    setIsOpen(newOpen); 
-
-    if (newOpen) {
+  useEffect(() => {
+    if (isOpen) {
       const openDetails = document.querySelectorAll('details[open]');
       openDetails.forEach(detail => {
-        if (detail !== e.currentTarget.closest('details')) { 
+        if (detail !== detailsRef.current) {
           detail.open = false;
         }
       });
     }
-  };
+  }, [isOpen]);
 
-  const handleDelete = (e) => {
-    e.preventDefault(); 
+  const handleDelete = () => {
     send("deleteMessage", messageId);  
-    const openDetails = document.querySelectorAll('details[open]');
-    openDetails.forEach(detail => detail.open = false);
-    setIsOpen(false); 
+    setIsOpen(false);
   };
-
-
 
   return (
     <details 
+      ref={detailsRef}
       open={isOpen}  
       className={styles.messageMenu} 
-      role="menu" 
-      aria-label="Opciones del mensaje"
-      onClick={handleToggle}  
+      onToggle={(e) => setIsOpen(e.target.open)}
     >
       <summary 
         className={styles.messageMenuButton} 
-        aria-expanded={isOpen} 
-        aria-haspopup="true"
+        aria-label="Opciones del mensaje"
       >
         ⋮  
       </summary>
-      <div className={styles.menuDropdown} role="menu">
+      <div className={styles.menuDropdown}>
         <button 
           className={styles.menuOptionDelete} 
           onClick={handleDelete}
-          role="menuitem"
-          aria-label="Eliminar mensaje"
         >
           Eliminar
         </button>

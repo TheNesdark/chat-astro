@@ -6,7 +6,6 @@ import { actions } from "astro:actions";
 import commandHandler from "@/handlers/commandhandler";
 import useAlerts from "./useAlerts";
 
-let isReactReady = false;
 function useMessages() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [messageInput, setMessageInput] = useState("");
@@ -48,12 +47,11 @@ function useMessages() {
             FileForm.append("file", file);
             const { data , error } = await actions.uploadFile(FileForm);
             if (error) {
-                console.error("Error uploading file:", error);
+                addAlert("Error al subir el archivo", "error");
                 return;
             }
             messageData.file_url = data.publicUrl;
             messageData.file_type = data.type;
-            console.log(data.type)
             messageData.file_name = data.name;
         }
 
@@ -65,7 +63,6 @@ function useMessages() {
     };
 
     useEffect(() => {
-        if (isReactReady) return;
         on("newMessage", newMessage);
         on("loadMessages", loadMessages);
         on("clearChat", clearMessages);
@@ -74,7 +71,6 @@ function useMessages() {
 
         const event = new Event("ReactReady");
         window.dispatchEvent(event);
-        isReactReady = true;
         
         return () => {
             off("newMessage", newMessage);

@@ -32,6 +32,7 @@ export const server = {
 
       try {
         const data = await signIn(email, password);
+        
       if (!data || !data.session) {
         throw new Error("Credenciales inválidas o error en el servidor.");
       }

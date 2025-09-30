@@ -12,7 +12,7 @@ if (accessToken && refreshToken) {
   <head>
     <meta charset="utf-8" />
     <title>Login - Chat Astro</title> 
-    <link rel="stylesheet" href="/src/styles/Login.css" />
+    <link rel="stylesheet" href="/Login.css" />
   </head>
   <body>
     <div class="login-container">
@@ -26,6 +26,50 @@ if (accessToken && refreshToken) {
       <a href="/Register" class="link-register">¿No tienes cuenta? Regístrate</a>
       <p id="message" class="message" style="display: none;"></p>
     </div>
-    <script type="module" src="/src/handlers/Auth/LoginHandler.ts"></script>
+    <script type="module">
+      import { actions } from "astro:actions";
+      const form = document.getElementById('loginForm');
+      form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const data = e.target;
+          const email = data.email.value;
+          const password = data.password.value;
+
+          if (!email || !password) {
+              showMessage('Email y contraseña son requeridos.');
+              return;
+          }
+
+          if (password.length < 6) {
+              showMessage('La contraseña debe tener al menos 6 caracteres.');
+              return;
+          }
+
+          const formData = new FormData(data);
+          try {
+              const { data, error } = await actions.login(formData);
+
+              if (error) {
+                  showMessage(error.message || 'Error en el login.');
+                  return;
+              }
+
+              if (data?.success) {
+                  showMessage('Login exitoso. Redirigiendo...', false);
+                  window.location.href = '/';
+              }
+          } catch (err) {
+              console.error('Error al ejecutar la Action:', err);
+              showMessage('Ha ocurrido un error inesperado.');
+          }
+      });
+
+      function showMessage(message, isError = true) {
+          const el = document.getElementById('message');
+          el.textContent = message;
+          el.style.display = 'block';
+          (isError ? el.classList.add('error') : el.classList.remove('error'));
+      }
+    </script>
   </body>
 </html>

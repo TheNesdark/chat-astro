@@ -1,0 +1,12 @@
+:root{
+    --font-style: italic;
+}
+
+body {
+    font-style: var(--font-style);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}

@@ -2,7 +2,10 @@
   "extends": "astro/tsconfigs/base",
   "include": [
     ".astro/types.d.ts",
-    "**/*"
+    "**/*",
+    "src/handlers/SocketHandler.ts",
+    "src/services/SocketService.ts",
+    "src/libs/Socket.ts"
   ],
   "exclude": [
     "dist"
@@ -10,6 +13,10 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
+    "module": "ESNext",
+    "target": "ES2022",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": false,
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],

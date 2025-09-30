@@ -49,7 +49,7 @@ export default function ChatForm() {
                 className="chat-send-button"
                 type="submit"
             >
-                <img src="/src/assets/icons/send.svg" alt="send" className="icon" />
+                <img src="/icons/send.svg" alt="send" className="icon" />
             </button>
         </form>
     );

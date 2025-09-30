@@ -1,9 +1,7 @@
 ---
 const { cookies, } = Astro;
-
 const accessToken = cookies.get("sb-access-token");
 const refreshToken = cookies.get("sb-refresh-token");
-
 if (accessToken && refreshToken) {
   return Astro.redirect("/");
 }
@@ -13,108 +11,8 @@ if (accessToken && refreshToken) {
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <title>Login - Chat Astro</title>
-    <link rel="stylesheet" href="/src/styles/global.css" />  <!-- Asume global CSS para consistencia -->
-    <style>
-      body { 
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        min-height: 100vh; 
-        margin: 0; 
-        background: #1e1e1e;  /* Fondo oscuro como en chat */
-        color: #fff;
-      }
-      .login-container { 
-        background: rgba(255, 255, 255, 0.1);  /* Semi-transparente como en Register */
-        padding: 2.5rem; 
-        border-radius: 20px; 
-        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);  /* Sombra sutil */
-        text-align: center; 
-        width: 100%; 
-        max-width: 350px; 
-        color: #fff;
-      }
-      h1 { 
-        margin-bottom: 1rem; 
-        color: #fff; 
-        font-size: 1.5rem; 
-      }
-      p { 
-        margin-bottom: 1rem; 
-        color: #ccc; 
-      }
-      input { 
-        width: 100%; 
-        padding: 12px; 
-        margin: 8px 0; 
-        border: 1px solid rgba(255, 255, 255, 0.3);  /* Borde sutil */
-        border-radius: 8px;  /* Redondeado como en Register */
-        box-sizing: border-box;
-        font-size: 16px;
-        background: rgba(255, 255, 255, 0.1);  /* Fondo semi-transparente */
-        color: #fff;
-        transition: border-color 0.2s;  /* Suave como en UI */
-      }
-      input:focus { 
-        outline: none; 
-        border-color: #fff;  /* Blanco para focus */
-      }
-      input::placeholder { 
-        color: #aaa; 
-      }
-      button { 
-        width: 100%; 
-        padding: 12px; 
-        background: rgba(255, 255, 255, 0.2);  /* Fondo como en Register */
-        color: #fff; 
-        border: none; 
-        border-radius: 8px; 
-        cursor: pointer; 
-        font-size: 16px; 
-        font-weight: 500;
-        transition: transform 0.2s, box-shadow 0.2s;  /* Efecto hover como icons */
-        margin: 8px 0;
-      }
-      button:hover:not(:disabled) { 
-        transform: translateY(-1px); 
-        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3); 
-      }
-      button:disabled { 
-        background: rgba(255, 255, 255, 0.1); 
-        cursor: not-allowed; 
-      }
-      .link-register { 
-        color: rgba(255, 255, 255, 0.8); 
-        text-decoration: none; 
-        font-size: 14px; 
-      }
-      .link-register:hover { 
-        text-decoration: underline; 
-      }
-      .error { 
-        color: #ff6b6b; 
-        margin: 8px 0; 
-        font-size: 14px; 
-        background: rgba(255, 107, 107, 0.1); 
-        padding: 8px; 
-        border-radius: 4px; 
-      }
-      .message {
-        color: #51cf66; 
-        margin: 8px 0; 
-        background: rgba(81, 207, 102, 0.1); 
-        padding: 8px; 
-        border-radius: 4px; 
-      }
-      @media (max-width: 480px) { 
-        .login-container { 
-          margin: 1rem; 
-          padding: 1.5rem; 
-        } 
-      }
-    </style>
+    <title>Login - Chat Astro</title> 
+    <link rel="stylesheet" href="/src/styles/Login.css" />
   </head>
   <body>
     <div class="login-container">
@@ -128,6 +26,6 @@ if (accessToken && refreshToken) {
       <a href="/Register" class="link-register">¿No tienes cuenta? Regístrate</a>
       <p id="message" class="message" style="display: none;"></p>
     </div>
+    <script type="module" src="/src/handlers/Auth/LoginHandler.ts"></script>
   </body>
-  <script type="module" src="/src/handlers/Auth/LoginHandler.ts"></script>
 </html>

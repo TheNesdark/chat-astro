@@ -1,85 +1,60 @@
 import FileManager from "@modules/FileManager";
-import chatUI from "@/utils/chatUI";
 
 class MicrophoneHandler {
-  private isRecording: boolean = false;
-  private attachButton: HTMLElement | null = null;
-  private mediaRecorder: MediaRecorder | null = null;
-  private stream: MediaStream | null = null;
+  private static isRecording = false;
+  private static mediaRecorder: MediaRecorder | null = null;
+  private static stream: MediaStream | null = null;
+  private static audioChunks: Blob[] = [];
 
-  constructor() {
-    this.initializeElements();
-  }
-
-  private initializeElements() {
-    this.attachButton = document.getElementById('attachButton');
-  }
-
-  async startRecording() {
+  public static async startRecording(setIsRecording: (value: boolean) => void) {
     if (this.isRecording) return;
-    
-    const audioChunks: Blob[] = [];
-    
+    const attachButton = document.getElementById('attachButton');
+
     try {
       this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       this.mediaRecorder = new MediaRecorder(this.stream);
-      
+
       this.mediaRecorder.ondataavailable = (e) => {
-        if (e.data.size > 0) audioChunks.push(e.data);
+        if (e.data.size > 0) this.audioChunks.push(e.data);
       };
-      
+
       this.mediaRecorder.onstop = () => {
-        this.stopStream();
-        
-        if (audioChunks.length > 0) {
-          const blob = new Blob(audioChunks, { type: 'audio/webm' });
-          const filename = `audio_${Date.now()}.webm`;
-          const file = new File([blob], filename, { type: 'audio/webm' });
-          FileManager.setFile(file);
-        }
-        
-        this.isRecording = false;
-        chatUI.updateButtonRecording(false);
+        this.stopRecording();
+        setIsRecording(false);
       };
-      
+
       this.mediaRecorder.start(100);
       this.isRecording = true;
-      chatUI.updateButtonRecording(true);
-      
-      if (this.attachButton) {
-        this.attachButton.addEventListener('click', () => {
-          this.stopRecording();
-        }, { once: true });
-      }
-      
+      setIsRecording(true);
+
+      attachButton?.addEventListener('click', () => {
+        this.mediaRecorder?.stop();
+      }, { once: true });
+
     } catch (error) {
       console.error('Error en micrófono:', error);
       alert('No se pudo acceder al micrófono.');
       this.isRecording = false;
-      chatUI.updateButtonRecording(false);
+      setIsRecording(false);
     }
   }
 
-  private stopRecording() {
-    if (this.mediaRecorder && this.isRecording) {
-      this.mediaRecorder.stop();
-    }
-  }
-
-  private stopStream() {
+  private static stopRecording() {
+    this.mediaRecorder = null;
     if (this.stream) {
       this.stream.getTracks().forEach(track => track.stop());
       this.stream = null;
     }
+    if (this.audioChunks.length > 0) {
+      const blob = new Blob(this.audioChunks, { type: 'audio/webm' });
+      const filename = `audio_${Date.now()}.webm`;
+      const file = new File([blob], filename, { type: 'audio/webm' });
+      FileManager.setFile(file);
+      this.audioChunks = [];
+    }
+    this.isRecording = false;
   }
 
-  isCurrentlyRecording(): boolean {
-    return this.isRecording;
-  }
 }
 
-// Crear instancia única
-const microphoneHandler = new MicrophoneHandler();
-
-// Exportar función que usa la instancia
-export default () => microphoneHandler.startRecording();
+export default MicrophoneHandler;

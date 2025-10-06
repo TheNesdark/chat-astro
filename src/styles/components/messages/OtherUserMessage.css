@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-.message {
+.other-user-message {
   display: flex;
   flex-direction: column;
   margin-bottom: 6px;
@@ -25,27 +25,23 @@
   gap: 8px;
 }
 
-header {
+.message-header {
   color:  #ff6b35;
   display: flex;
-
 }
 
-
-.message:hover {
+.other-user-message:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
-.messageContent {
+.message-content {
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
 }
 
-
-
-.messageText {
+.message-text {
   color: #e0e0e0;
   font-size: 15px;
   word-wrap: break-word;
@@ -54,14 +50,14 @@ header {
   margin-right: 6px;
 }
 
-.messageMedia {
+.message-media {
   width: 100%;
   height: auto;
   border-radius: 12px;
   overflow: hidden;
 }
 
-.messageMedia img {
+.message-media img {
   width: 100%;;
   max-width: 500px;
   height: auto;
@@ -71,7 +67,7 @@ header {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-.messageMedia video {
+.message-media video {
   width: 100%;
   height: auto;
   max-height: 300px;
@@ -81,35 +77,33 @@ header {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-.messageMedia video::-webkit-media-controls-panel {
+.message-media video::-webkit-media-controls-panel {
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
   border-radius: 0 0 12px 12px;
 }
 
-
-.messageMedia audio {
+.message-media audio {
   min-width: 250px;
   width: 100%;
   outline: none;
   background: transparent;
 }
 
-.messageMedia audio::-webkit-media-controls-play-button,
-.messageMedia audio::-webkit-media-controls-mute-button,
-.messageMedia audio::-webkit-media-controls-current-time-display,
-.messageMedia audio::-webkit-media-controls-time-remaining-display,
-.messageMedia audio::-webkit-media-controls-timeline {
+.message-media audio::-webkit-media-controls-play-button,
+.message-media audio::-webkit-media-controls-mute-button,
+.message-media audio::-webkit-media-controls-current-time-display,
+.message-media audio::-webkit-media-controls-time-remaining-display,
+.message-media audio::-webkit-media-controls-timeline {
   filter: invert(1);
 }
 
-.messageMedia audio::-webkit-media-controls-panel,
-.messageMedia audio::-webkit-media-controls-enclosure {
+.message-media audio::-webkit-media-controls-panel,
+.message-media audio::-webkit-media-controls-enclosure {
   filter: none;
   background: linear-gradient(135deg, rgb(42, 42, 42) 0%, rgb(55, 65, 81) 100%);
 }
 
-
-.messageMedia a {
+.message-media a {
   width: 100%;
   display: grid;
   place-content: center;
@@ -123,8 +117,7 @@ header {
   transition: all 0.2s ease;
 }
 
-
-.messageTime {
+.message-time {
   position: absolute;
   bottom: 2px;
   right: 2px;
@@ -145,4 +138,3 @@ header {
     transform: translateY(0) scale(1);
   }
 }
-

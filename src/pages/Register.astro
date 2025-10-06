@@ -1,5 +1,5 @@
 ---
-
+import { actions } from "astro:actions";
 ---
 
 <!doctype html>
@@ -122,7 +122,7 @@
     <div class="register-form">
       <h1>Registro</h1>
       <p>Únete al chat</p>
-      <form id="registerForm">
+      <form action={actions.register} method="post">
         <input type="file" name="avatar" placeholder="Avatar" />
         <input
           type="text"
@@ -141,10 +141,8 @@
         <button type="submit" id="submitBtn">Registrarse</button>
       </form>
       <a href="/Login" class="toggle-link">¿Ya tienes cuenta? Inicia sesión</a>
-      <p id="message" class="message" style="display: none;"></p>
     </div>
 
-    <script type="module" src="/src/handlers/Auth/RegisterHandler.ts">
-    </script>
+
 </body>
 </html>

@@ -1,8 +1,8 @@
-import style from "@styles/SystemMessage.module.css";
+import '@/styles/components/messages/SystemMessage.css';
 
 export default function SystemMessage({ message }) {
   return (
-    <div className={style.message}>
+    <div className="system-message">
       {message.message}
     </div>
   );

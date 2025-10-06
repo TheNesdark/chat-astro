@@ -1,12 +1,11 @@
 ---
-import Header from "@components/ChatHeader.astro";
+import SocketProvider from "@components/SocketProvider.tsx";
+import ChatHeader from "@components/ChatHeader.jsx";
 import ChatContainer from "@components/ChatContainer.jsx";
-import ChatFooter from "@components/Footer/ChatFooter.astro";
-import CamViewer from "@components/modals/CamViewer.astro";
+import ChatFooter from "@components/Footer/ChatFooter.jsx";
+import CamViewer from "@components/modals/CamViewer.jsx";
 import AlertContainer from "@/components/Alerts/AlertContainer.jsx";
 import { getCurrentUser, refreshSession, clearCookies } from "@/services/Auth";
-import "../styles/global.css";
-
 const accessToken = Astro.cookies.get("sb-access-token")?.value;
 const refreshToken = Astro.cookies.get("sb-refresh-token")?.value;
 
@@ -21,7 +20,6 @@ try {
   if (!user) {
     throw new Error("Token inválido");
   }
-
 } catch (validateError) {
   try {
     const refreshData = await refreshSession(refreshToken);
@@ -47,21 +45,19 @@ try {
     });
 
     user = refreshData.user;
-
   } catch (error) {
     clearCookies(Astro.cookies);
     return Astro.redirect("/Login");
   }
 }
 
-
 if (!user) {
   return Astro.redirect("/Login");
 }
 
-
 const userMetadata = user.user_metadata || {};
-const displayName = userMetadata.display_name || user.email?.split('@')[0] || 'Usuario';
+const displayName =
+  userMetadata.display_name || user.email?.split("@")[0] || "Usuario";
 const avatarUrl = userMetadata.avatar_url || null;
 
 const userData = {
@@ -81,13 +77,13 @@ const userData = {
     <title>Astro Basics</title>
   </head>
   <body>
-    <Header user={userData} />
+    <SocketProvider client:load />
+    <ChatHeader client:load user={userData} />
     <ChatContainer client:load user={user} />
-    <ChatFooter />
-    <CamViewer />
+    <ChatFooter client:load />
+    <CamViewer client:load />
     <AlertContainer client:load />
   </body>
-  <script type="module" src="/src/main.js" defer></script>
 </html>
 
 <style>

@@ -13,7 +13,6 @@
   filter: invert(1);
 }
 
-/* ChatForm Styles */
 .chat-form {
   background: #2a2a2a;
   position: relative;
@@ -111,7 +110,6 @@
   margin: 0 -4px;
 }
 
-/* AttachButton Styles */
 .attach-button {
   width: 35px;
   height: 35px;
@@ -205,7 +203,6 @@
   }
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
   .btn-camera {
     display: none !important;

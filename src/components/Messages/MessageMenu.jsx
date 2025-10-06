@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';  
-import styles from '@styles/UserMessage.module.css';  
+import '@/styles/components/messages/UserMessage.css';  
 import { send } from '@services/SocketService';
 
 export default function MessageMenu({ messageId }) {  
@@ -9,7 +9,7 @@ export default function MessageMenu({ messageId }) {
   useEffect(() => {
     if (isOpen) {
       const openDetails = document.querySelectorAll('details[open]');
-      openDetails.forEach(detail => {
+      openDetails.forEach((detail) => {
         if (detail !== detailsRef.current) {
           detail.open = false;
         }
@@ -26,18 +26,18 @@ export default function MessageMenu({ messageId }) {
     <details 
       ref={detailsRef}
       open={isOpen}  
-      className={styles.messageMenu} 
+      className="message-menu" 
       onToggle={(e) => setIsOpen(e.target.open)}
     >
       <summary 
-        className={styles.messageMenuButton} 
+        className="message-menu-button" 
         aria-label="Opciones del mensaje"
       >
         ⋮  
       </summary>
-      <div className={styles.menuDropdown}>
+      <div className="menu-dropdown">
         <button 
-          className={styles.menuOptionDelete} 
+          className="menu-option-delete" 
           onClick={handleDelete}
         >
           Eliminar

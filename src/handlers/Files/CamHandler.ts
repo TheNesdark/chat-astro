@@ -2,45 +2,43 @@ import FileManager from "@modules/FileManager";
 import { getBlob } from "@utils/FileConverter";
 
 class CameraHandler {
-  private modal: HTMLDialogElement | null = null;
-  private video: HTMLVideoElement | null = null;
-  private canvas: HTMLCanvasElement | null = null;
-  private btnCapture: HTMLLabelElement | null = null;
-  private camControls: HTMLDivElement | null = null;
-  private btnClose: HTMLLabelElement | null = null;
-  private btnBack: HTMLLabelElement | null = null;
-  private btnSend: HTMLLabelElement | null = null;
-  private stream: MediaStream | null = null;
-  private isRecording: boolean = false;
+  private static stream: MediaStream | null = null;
+  private static isRecording = false;
+  private static initialized = false;
+  private static modal: HTMLDialogElement | null = null;
+  private static video: HTMLVideoElement | null = null;
+  private static canvas: HTMLCanvasElement | null = null;
+  private static btnCapture: HTMLElement | null = null;
+  private static camControls: HTMLDivElement | null = null;
+  private static btnClose: HTMLElement | null = null;
+  private static btnBack: HTMLElement | null = null;
+  private static btnSend: HTMLElement | null = null;
 
-  constructor() {
-    this.initializeElements();
-    this.attachEventListeners();
-  }
-
-  private initializeElements() {
+  static initialize() {
+    if (this.initialized) return;
+    
     this.modal = document.getElementById('camModal') as HTMLDialogElement;
     this.video = document.getElementById('camVideo') as HTMLVideoElement;
     this.canvas = document.getElementById('camCanvas') as HTMLCanvasElement;
-    this.btnCapture = document.getElementById('btnCapture') as HTMLLabelElement;
+    this.btnCapture = document.getElementById('btnCapture');
     this.camControls = document.getElementById('camControls') as HTMLDivElement;
-    this.btnClose = document.getElementById('btnClose') as HTMLLabelElement;
-    this.btnBack = document.getElementById('btnBack') as HTMLLabelElement;
-    this.btnSend = document.getElementById('btnSend') as HTMLLabelElement;
-  }
+    this.btnClose = document.getElementById('btnClose');
+    this.btnBack = document.getElementById('btnBack');
+    this.btnSend = document.getElementById('btnSend');
 
-  private attachEventListeners() {
     if (this.btnClose) this.btnClose.addEventListener('click', () => this.close());
     if (this.btnCapture) this.btnCapture.addEventListener('click', () => this.capturePhoto());
     if (this.btnBack) this.btnBack.addEventListener('click', () => this.showCameraMode());
     if (this.btnSend) this.btnSend.addEventListener('click', () => this.sendPhoto());
     if (this.modal) this.modal.addEventListener('close', () => this.close());
+
+    this.initialized = true;
   }
 
-  async open() {
-    if (this.isRecording) {
-      return;
-    }
+  static async open() {
+    if (this.isRecording) return;
+    
+    this.initialize();
     
     try {
       this.stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -57,10 +55,8 @@ class CameraHandler {
     }
   }
 
-  close() {
-    if (!this.isRecording) {
-      return;
-    }
+  static close() {
+    if (!this.isRecording) return;
     
     if (this.stream) {
       this.stream.getTracks().forEach(track => track.stop());
@@ -79,11 +75,9 @@ class CameraHandler {
     }
   }
 
-  private capturePhoto() {
-    if (!this.isRecording) {
-      return;
-    }
-    if (!this.video || !this.canvas || this.video.videoWidth <= 0)  return;
+  private static capturePhoto() {
+    if (!this.isRecording) return;
+    if (!this.video || !this.canvas || this.video.videoWidth <= 0) return;
     
     this.canvas.width = this.video.videoWidth;
     this.canvas.height = this.video.videoHeight;
@@ -94,11 +88,8 @@ class CameraHandler {
     this.showPreviewMode();
   }
 
-  private async sendPhoto(): Promise<void> {
-    if (!this.isRecording) {
-      return;
-    }
-    if (!this.canvas) return;
+  private static async sendPhoto(): Promise<void> {
+    if (!this.isRecording || !this.canvas) return;
     
     const blob = await getBlob(this.canvas);
     if (!blob) {
@@ -112,10 +103,9 @@ class CameraHandler {
     this.close();
   }
 
-  private showPreviewMode() {
-    if (!this.isRecording) {
-      return;
-    }
+  private static showPreviewMode() {
+    if (!this.isRecording) return;
+    
     if (this.camControls) this.camControls.style.display = 'flex';
     if (this.btnBack) this.btnBack.hidden = false;
     if (this.video) this.video.hidden = true;
@@ -123,10 +113,9 @@ class CameraHandler {
     if (this.btnCapture) this.btnCapture.style.display = 'none';
   }
 
-  private showCameraMode() {
-    if (!this.isRecording) {
-      return;
-    }
+  private static showCameraMode() {
+    if (!this.isRecording) return;
+    
     if (this.video) this.video.hidden = false;
     if (this.canvas) this.canvas.hidden = true;
     if (this.btnCapture) this.btnCapture.style.display = 'block';
@@ -134,8 +123,4 @@ class CameraHandler {
   }
 }
 
-// Crear instancia única
-const cameraHandler = new CameraHandler();
-
-// Exportar función que usa la instancia
-export default () => cameraHandler.open();
+export default CameraHandler;

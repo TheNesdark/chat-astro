@@ -1,15 +1,15 @@
-import styles from "@styles/OtherUserMessage.module.css";
+import '@/styles/components/messages/OtherUserMessage.css';
 import FileRender from '@/components/Messages/FileRender.tsx';
 
 export default function OtherUserMessage({ message }) {
   return (
-    <div className={`${styles.message} ${styles.messageOther}`}>
-      <header className={styles.messageHeader}>
-        <div className={styles.messageUsername}>{message.username}</div>
+    <div className="other-user-message">
+      <header className="message-header">
+        <div className="message-username">{message.username}</div>
       </header>
-      <div className={styles.messageContent}>
-      <div className={styles.messageText}>{message.content}</div>
-      <div className={styles.messageMedia}>
+      <div className="message-content">
+      <div className="message-text">{message.content}</div>
+      <div className="message-media">
           <FileRender
             fileUrl={message.file_url}
             fileType={message.file_type}
@@ -17,7 +17,7 @@ export default function OtherUserMessage({ message }) {
           />
       </div>
       </div>
-      <div className={styles.messageTime}>
+      <div className="message-time">
         {new Date(message.timestamp).toLocaleTimeString()}
       </div>
     </div>

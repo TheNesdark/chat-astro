@@ -2,7 +2,10 @@
   "extends": "astro/tsconfigs/base",
   "include": [
     ".astro/types.d.ts",
-    "**/*"
+    "**/*",
+    "src/handlers/SocketHandler.ts",
+    "src/services/SocketService.ts",
+    "src/libs/Socket.ts"
   ],
   "exclude": [
     "dist"

@@ -1,4 +1,4 @@
-.alertContainer {
+.alert-container {
     position: fixed;
     bottom: 90px;
     right: 20px;
@@ -39,26 +39,25 @@
     }
 }
 
-/* Estilos para diferentes tipos de alertas */
-.info {
+.alert-info {
     background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
     color: #014f86;
     border-color: #b3e5fc;
 }
 
-.success {
+.alert-success {
     background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
     color: #14532d;
     border-color: #bbf7d0;
 }
 
-.warning {
+.alert-warning {
     background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
     color: #854d0e;
     border-color: #fde68a;
 }
 
-.error {
+.alert-error {
     background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
     color: #7f1d1d;
     border-color: #fecaca;

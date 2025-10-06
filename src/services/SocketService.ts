@@ -1,9 +1,16 @@
-import socket from "@/libs/Socket";
+import {io, Socket} from "socket.io-client";
 
 let isConnected: boolean = false;
-
 const eventHandlers = new Map<string, ((data: any) => void)[]>();
+const URL_SERVER = import.meta.env.PUBLIC_SERVER_URL;
+let socket: Socket = null
 
+export function initSocket() {
+    socket = io(URL_SERVER, {
+        withCredentials: true,
+        autoConnect: false,
+    });
+}
 export function connect() {
     if (!isConnected) {
         socket.connect();

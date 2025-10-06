@@ -1,5 +1,6 @@
 import useMessages from "@hooks/useMessages.tsx"
 import { useState } from "react"
+import sendIcon from '@/assets/icons/send.svg';
 
 export default function ChatForm() {
     const { messageInput, setMessageInput, sendMessage } = useMessages()
@@ -49,7 +50,11 @@ export default function ChatForm() {
                 className="chat-send-button"
                 type="submit"
             >
-                <img src="/src/assets/icons/send.svg" alt="send" className="icon" />
+<<<<<<< HEAD
+                <img src={sendIcon.src} alt="send" className="icon" />
+=======
+                <img src="/icons/send.svg" alt="send" className="icon" />
+>>>>>>> f078b9f9eede162aaba107090a524feb4955d5fe
             </button>
         </form>
     );

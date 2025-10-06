@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Alert from "@/components/Alerts/Alert";
 import useAlerts from "@hooks/useAlerts";
-import style from "@styles/Alert.module.css"
+import '@/styles/components/alerts/Alert.css';
 
 export default function AlertContainer() {
   const { alerts, addAlert } = useAlerts();
@@ -11,7 +11,7 @@ export default function AlertContainer() {
   }, []);
 
   return (
-    <div className={style.alertContainer}>
+    <div className="alert-container">
       {alerts.map((alert) => (
         <Alert 
           key={alert.id} 

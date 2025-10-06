@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-.message {
+.user-message {
   display: flex;
   flex-direction: column;
   margin-bottom: 6px;
@@ -24,19 +24,18 @@
   max-width: 60%;
 }
 
-
-.message:hover {
+.user-message:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 92, 75, 0.4);
 }
 
-.messageMenu{
+.message-menu {
   position: absolute;
   top: 4px;
   right: 4px;
 }
 
-.messageMenuButton {
+.message-menu-button {
   color: rgba(255, 255, 255, 0.6);
   background: rgba(0, 0, 0, 0.1);
   border: none;
@@ -55,26 +54,26 @@
   transform: scale(0.8);
 }
 
-.message:hover .messageMenuButton {
+.user-message:hover .message-menu-button {
   opacity: 1;
   transform: scale(1);
 }
 
-.messageMenu::-webkit-details-marker {
+.message-menu::-webkit-details-marker {
   display: none;
 }
 
-.messageMenu::marker {
+.message-menu::marker {
   display: none;
 }
 
-.messageMenuButton:hover {
+.message-menu-button:hover {
   background: rgba(0, 0, 0, 0.2);
   color: rgba(255, 255, 255, 0.9);
   transform: scale(1.1);
 }
 
-.menuDropdown {
+.menu-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
@@ -89,7 +88,7 @@
   backdrop-filter: blur(10px);
 }
 
-.menuOptionDelete {
+.menu-option-delete {
   padding: 12px 16px;
   cursor: pointer;
   color: #ef4444;
@@ -105,21 +104,18 @@
   gap: 8px;
 }
 
-.menuOptionDelete:hover {
+.menu-option-delete:hover {
   background-color: #374151;
   color: #f87171;
 }
 
-
-.messageContent {
+.message-content {
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
 }
 
-
-
-.messageText {
+.message-text {
   color: #ecfdf5;
   font-size: 15px;
   word-wrap: break-word;
@@ -129,14 +125,14 @@
   padding: 5px
 }
 
-.messageMedia {
+.message-media {
   width: 100%;
   height: auto;
   border-radius: 12px;
   overflow: hidden;
 }
 
-.messageMedia img {
+.message-media img {
   width: 100%;;
   max-width: 500px;
   height: auto;
@@ -146,7 +142,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.messageMedia video {
+.message-media video {
   width: 100%;
   height: auto;
   max-height: 300px;
@@ -156,35 +152,33 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.messageMedia video::-webkit-media-controls-panel {
+.message-media video::-webkit-media-controls-panel {
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
   border-radius: 0 0 12px 12px;
 }
 
-
-.messageMedia audio {
+.message-media audio {
   min-width: 250px;
   width: 100%;
   outline: none;
   background: transparent;
 }
 
-.messageMedia audio::-webkit-media-controls-play-button,
-.messageMedia audio::-webkit-media-controls-mute-button,
-.messageMedia audio::-webkit-media-controls-current-time-display,
-.messageMedia audio::-webkit-media-controls-time-remaining-display,
-.messageMedia audio::-webkit-media-controls-timeline {
+.message-media audio::-webkit-media-controls-play-button,
+.message-media audio::-webkit-media-controls-mute-button,
+.message-media audio::-webkit-media-controls-current-time-display,
+.message-media audio::-webkit-media-controls-time-remaining-display,
+.message-media audio::-webkit-media-controls-timeline {
   filter: invert(1);
 }
 
-.messageMedia audio::-webkit-media-controls-panel,
-.messageMedia audio::-webkit-media-controls-enclosure {
+.message-media audio::-webkit-media-controls-panel,
+.message-media audio::-webkit-media-controls-enclosure {
   filter: none;
   background: linear-gradient(135deg, #1a4d3a 0%, #22543d 100%);
 }
 
-
-.messageMedia a {
+.message-media a {
   width: 100%;
   display: grid;
   place-content: center;
@@ -199,8 +193,7 @@
   transition: all 0.2s ease;
 }
 
-
-.messageTime {
+.message-time {
   position: absolute;
   bottom: 2px;
   right: 2px;
@@ -221,4 +214,3 @@
     transform: translateY(0) scale(1);
   }
 }
-

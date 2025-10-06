@@ -13,6 +13,10 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
+    "module": "ESNext",
+    "target": "ES2022",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": false,
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],

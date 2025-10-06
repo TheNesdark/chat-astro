@@ -50,11 +50,7 @@ export default function ChatForm() {
                 className="chat-send-button"
                 type="submit"
             >
-<<<<<<< HEAD
                 <img src={sendIcon.src} alt="send" className="icon" />
-=======
-                <img src="/icons/send.svg" alt="send" className="icon" />
->>>>>>> f078b9f9eede162aaba107090a524feb4955d5fe
             </button>
         </form>
     );

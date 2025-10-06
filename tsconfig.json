@@ -16,7 +16,7 @@
     "module": "ESNext",
     "target": "ES2022",
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": false,
+    "allowImportingTsExtensions": true,
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],

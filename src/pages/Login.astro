@@ -1,11 +1,7 @@
 ---
-<<<<<<< HEAD
 import { actions } from "astro:actions";
 
 const { cookies } = Astro;
-=======
-const { cookies, } = Astro;
->>>>>>> f078b9f9eede162aaba107090a524feb4955d5fe
 const accessToken = cookies.get("sb-access-token");
 const refreshToken = cookies.get("sb-refresh-token");
 if (accessToken && refreshToken) {
@@ -18,11 +14,7 @@ if (accessToken && refreshToken) {
   <head>
     <meta charset="utf-8" />
     <title>Login - Chat Astro</title> 
-<<<<<<< HEAD
     <link rel="stylesheet" href="/src/styles/auth/Login.css" />
-=======
-    <link rel="stylesheet" href="/src/styles/Login.css" />
->>>>>>> f078b9f9eede162aaba107090a524feb4955d5fe
   </head>
   <body>
     <div class="login-container">
@@ -35,10 +27,6 @@ if (accessToken && refreshToken) {
       </form>
       <a href="/Register" class="link-register">¿No tienes cuenta? Regístrate</a>
     </div>
-<<<<<<< HEAD
 
-=======
-    <script type="module" src="/src/handlers/Auth/LoginHandler.ts"></script>
->>>>>>> f078b9f9eede162aaba107090a524feb4955d5fe
   </body>
 </html>

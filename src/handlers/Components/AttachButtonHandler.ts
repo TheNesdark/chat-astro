@@ -32,9 +32,21 @@ class AttachButtonHandler {
       });
 
       // Event listeners para cada handler
-      this.btnMicrophone.addEventListener('click', MicHandler);
-      this.btnCamera.addEventListener('click', CamHandler);
-      this.fileInput.addEventListener('change', FileHandler);
+      this.btnMicrophone.addEventListener('click', () => {
+        MicHandler.startRecording((isRecording: boolean) => {
+          if (this.attachButton) {
+            this.attachButton.classList.toggle('recording', isRecording);
+          }
+        });
+      });
+
+      this.btnCamera.addEventListener('click', () => {
+        CamHandler.open();
+      });
+
+      this.fileInput.addEventListener('change', (event: Event) => {
+        FileHandler.handleFileSelection(event);
+      });
     }
   }
 
